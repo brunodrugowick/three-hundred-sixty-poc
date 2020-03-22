@@ -1,6 +1,9 @@
 package dev.drugowick.threehundredsixty.controller;
 
+import dev.drugowick.threehundredsixty.domain.entity.Feedback;
+import dev.drugowick.threehundredsixty.domain.entity.FeedbackState;
 import dev.drugowick.threehundredsixty.domain.entity.Question;
+import dev.drugowick.threehundredsixty.domain.repository.FeedbackRepository;
 import dev.drugowick.threehundredsixty.domain.repository.QuestionRepository;
 import dev.drugowick.threehundredsixty.dto.AnswerDto;
 import org.springframework.stereotype.Controller;
@@ -18,9 +21,11 @@ import java.util.Optional;
 public class FeedbackController {
 
     private QuestionRepository questionRepository;
+    private FeedbackRepository feedbackRepository;
 
-    public FeedbackController(QuestionRepository questionRepository) {
+    public FeedbackController(QuestionRepository questionRepository, FeedbackRepository feedbackRepository) {
         this.questionRepository = questionRepository;
+        this.feedbackRepository = feedbackRepository;
     }
 
     @GetMapping
@@ -56,8 +61,11 @@ public class FeedbackController {
         question.setEvaluation(answerDto.getEvaluation());
         question.setExample(answerDto.getExample());
         question.setImprovement(answerDto.getImprovement());
-
         questionRepository.save(question);
+
+        Optional<Feedback> optionalFeedback = feedbackRepository.findByEmployeeNameAndUserUsername(person, "BrunoMuniz");
+        optionalFeedback.ifPresent(feedback -> feedback.setState(FeedbackState.STARTED));
+        optionalFeedback.ifPresent((feedback -> feedbackRepository.save(feedback)));
 
         return "redirect:/" + person + "/feedback";
     }
