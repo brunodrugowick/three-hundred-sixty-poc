@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href='/webjars/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header (${username})"></div>
+<br>
+<div th:replace="fragments/admin-page-title :: admin-page-title ('Avaliações')"></div>
+<br>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr class="text-left">
+            <th scope="col">Funcionário</th>
+            <th scope="col">Cargo</th>
+            <th scope="col">Avaliação</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-left" th:each="feedback : ${feedbacks}">
+            <td th:text="${feedback.getEmployee().getName()}"></td>
+            <td th:text="${feedback.getEmployee().getPosition()}"></td>
+            <td><a class="btn btn-primary"
+                    th:href="'/' + ${feedback.getEmployee().getName() + '/feedback'}"
+                    th:text="${feedback.getState().state}"></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

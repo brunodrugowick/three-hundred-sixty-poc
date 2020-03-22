@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href='/webjars/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+    <link href="/webjars/font-awesome/5.12.0/css/fontawesome.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Feedback</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container-fluid" id="page">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Título</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Avaliação</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="baseQuestion : ${baseQuestions}">
+            <td th:text="${baseQuestion.title}">Entrega</td>
+            <td th:text="${baseQuestion.description}">Se ele entrega</td>
+            <td th:text="${baseQuestion.evaluation}">Atende</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<script src="webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
