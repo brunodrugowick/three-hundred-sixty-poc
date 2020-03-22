@@ -1,11 +1,9 @@
 package dev.drugowick.threehundredsixty.config;
 
-import dev.drugowick.threehundredsixty.domain.entity.FeedbackQuestion;
-import dev.drugowick.threehundredsixty.domain.entity.FeedbackQuestionAnswer;
+import dev.drugowick.threehundredsixty.domain.entity.Question;
 import dev.drugowick.threehundredsixty.domain.repository.BaseQuestionRepository;
-import dev.drugowick.threehundredsixty.domain.repository.FeedbackQuestionAnswerRepository;
-import dev.drugowick.threehundredsixty.domain.repository.FeedbackQuestionRepository;
 import dev.drugowick.threehundredsixty.domain.repository.FeedbackRepository;
+import dev.drugowick.threehundredsixty.domain.repository.QuestionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -17,32 +15,28 @@ import org.springframework.stereotype.Component;
 public class BootstrapData implements CommandLineRunner {
 
     private BaseQuestionRepository baseQuestionRepository;
-    private FeedbackQuestionRepository feedbackQuestionRepository;
+    private QuestionRepository questionRepository;
     private FeedbackRepository feedbackRepository;
-    private FeedbackQuestionAnswerRepository answerRepository;
 
     public BootstrapData(BaseQuestionRepository baseQuestionRepository,
-                         FeedbackQuestionRepository feedbackQuestionRepository,
-                         FeedbackRepository feedbackRepository,
-                         FeedbackQuestionAnswerRepository answerRepository) {
-        this.answerRepository = answerRepository;
+                         QuestionRepository questionRepository,
+                         FeedbackRepository feedbackRepository) {
         this.baseQuestionRepository = baseQuestionRepository;
-        this.feedbackQuestionRepository = feedbackQuestionRepository;
+        this.questionRepository = questionRepository;
         this.feedbackRepository = feedbackRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
         feedbackRepository.findAll().forEach(feedback -> {
-            baseQuestionRepository.findAllByCategory(feedback.getEmployee().getPosition()).forEach(baseQuestion -> {
-                FeedbackQuestion feedbackQuestion = new FeedbackQuestion(
+            baseQuestionRepository.findAllByPosition(feedback.getEmployee().getPosition()).forEach(baseQuestion -> {
+                Question question = new Question(
+                        baseQuestion.getPosition(),
                         baseQuestion.getCategory(),
-                        baseQuestion.getTitle(),
                         baseQuestion.getDescription(),
                         feedback.getEmployee(),
                         feedback.getUser());
-                feedbackQuestionRepository.save(feedbackQuestion);
-                answerRepository.save(new FeedbackQuestionAnswer(feedbackQuestion));
+                questionRepository.save(question);
             });
         });
     }

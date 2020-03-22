@@ -16,7 +16,7 @@ public class HomePageController {
 
     @GetMapping
     public String homePage(Model model) {
-        String username = "HeitorMatsui";
+        String username = "BrunoMuniz";
         model.addAttribute("feedbacks", feedbackRepository.findAllByUserUsername(username));
         model.addAttribute("username", username);
         return "index";

@@ -1,11 +1,11 @@
 --- Insert base questions here.
-insert into base_question (id, category, title, description) values (
+insert into base_question (id, position, category, description) values (
     1, 'Analista de Sistemas', 'Entrega', 'Cumpre os prazos determinados para suas atividades');
-insert into base_question (id, category, title, description) values (
+insert into base_question (id, position, category, description) values (
     2, 'Analista de Sistemas', 'Liderança', 'Se responsabiliza pelos resultados etc.');
-insert into base_question (id, category, title, description) values (
+insert into base_question (id, position, category, description) values (
     3, 'Coordenador', 'Zuera', 'Promove a zuera saudável e justificável.');
-insert into base_question (id, category, title, description) values (
+insert into base_question (id, position, category, description) values (
     4, 'Coordenador', 'Liderança', 'Garante que sua equipe está devidamente informada e acompanha as tretas.');
 
 -- Insert the people that are going to be evaluated.

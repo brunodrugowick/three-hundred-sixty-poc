@@ -2,29 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href='/webjars/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
-    <link href="/webjars/font-awesome/5.12.0/css/fontawesome.min.css" rel="stylesheet">
+
     <meta charset="UTF-8">
     <title>Feedback</title>
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"></div>
-
-<div class="container-fluid" id="page">
+<div th:replace="fragments/header :: header (${username})"></div>
+<br>
+<div th:replace="fragments/admin-page-title :: admin-page-title (${questions.get(0).getEmployee().getName()} + ' (' + ${questions.get(0).getEmployee().getPosition()} + ')')"></div>
+<br>
+<div class="container-fluid">
 
     <table class="table table-striped">
         <thead>
-        <tr>
+        <tr class="text-left">
             <th scope="col">Título</th>
             <th scope="col">Descrição</th>
             <th scope="col">Avaliação</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="baseQuestion : ${baseQuestions}">
-            <td th:text="${baseQuestion.title}">Entrega</td>
-            <td th:text="${baseQuestion.description}">Se ele entrega</td>
-            <td th:text="${baseQuestion.evaluation}">Atende</td>
+        <tr class="text-left" th:each="question : ${questions}">
+            <td th:text="${question.title}">Entrega</td>
+            <td th:text="${question.description}">Se ele entrega</td>
+            <td>
+                <a th:if="${question.getEvaluation() != null}" class="btn btn-secondary"
+                   th:href="'/' + ${question.getEmployee().getName() + '/feedback/' + question.getId()}"
+                   th:text="${question.getEvaluation()}"></a>
+                <a th:if="${question.getEvaluation() == null}" class="btn btn-primary"
+                   th:href="'/' + ${question.getEmployee().getName() + '/feedback/' + question.getId()}"
+                   th:text="Avaliar"></a>
+            </td>
         </tr>
         </tbody>
     </table>

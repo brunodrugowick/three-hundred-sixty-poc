@@ -20,8 +20,13 @@ public class BaseQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    /**
+     * Denotes the position to which to apply the question. For example, "Systems Analyst".
+     */
+    private String position;
+
     private String category;
-    private String title;
     private String description;
 
     //TODO default toString methods from Lombok causes overflow

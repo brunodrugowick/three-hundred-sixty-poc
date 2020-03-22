@@ -16,14 +16,11 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-public class FeedbackQuestion {
+public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String category;
-    private String title;
-    private String description;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -33,7 +30,15 @@ public class FeedbackQuestion {
     @JoinColumn(name = "evaluated_id", nullable = false)
     private Employee employee;
 
-    public FeedbackQuestion(String category, String title, String description, Employee employee, User user) {
+    private String category;
+    private String title;
+    private String description;
+
+    private String evaluation;
+    private String example;
+    private String improvement;
+
+    public Question(String category, String title, String description, Employee employee, User user) {
         this.category = category;
         this.title = title;
         this.description = description;

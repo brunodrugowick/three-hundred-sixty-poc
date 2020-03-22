@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface BaseQuestionRepository extends JpaRepository<BaseQuestion, Long> {
 
-    List<BaseQuestion> findAllByCategory(String category);
+    List<BaseQuestion> findAllByPosition(String position);
 }
