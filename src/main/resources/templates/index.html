@@ -26,9 +26,16 @@
         <tr class="text-left" th:each="feedback : ${feedbacks}">
             <td th:text="${feedback.getEmployee().getName()}"></td>
             <td th:text="${feedback.getEmployee().getPosition()}"></td>
-            <td><a class="btn btn-primary"
+            <td>
+                <a th:if="${feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-outline-primary"
+                   style="white-space: nowrap"
                     th:href="'/' + ${feedback.getEmployee().getName() + '/feedback'}"
-                    th:text="${feedback.getState().state}"></a></td>
+                    th:text="${feedback.getState().state}"></a>
+                <a th:if="${!feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-primary"
+                   style="white-space: nowrap"
+                    th:href="'/' + ${feedback.getEmployee().getName() + '/feedback'}"
+                    th:text="${feedback.getState().state}"></a>
+            </td>
         </tr>
         </tbody>
     </table>

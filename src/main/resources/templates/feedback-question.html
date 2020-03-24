@@ -9,17 +9,21 @@
 <body>
 
 <div th:replace="fragments/header :: header (${username})"></div>
-
+<br>
+<div th:replace="fragments/admin-page-title :: admin-page-title (${question.getEmployee().getName()} + ' (' + ${question.getEmployee().getPosition()} + ')')"></div>
+<br><hr>
 <div class="container-fluid" id="page">
     <form th:object="${question}" th:method="post">
         <input type="hidden" name="id" th:value="*{id}" />
         <br>
-        <div th:replace="fragments/admin-page-title :: admin-page-title (${question.title})">Entrega</div>
+        <div class="container-fluid text-left">
+            <h3 th:text="${question.title}">Entrega</h3>
+        </div>
         <br>
         <input type="hidden" name="title" th:value="*{title}" />
 
         <div class="container-fluid text-left">
-            <h4 th:text="${question.getDescription()}">Cumpre os prazos determinados para suas atividades.</h4>
+            <h5 th:text="${question.getDescription()}">Cumpre os prazos determinados para suas atividades.</h5>
             <input type="hidden" name="description" th:value="*{description}" />
         </div>
 

@@ -27,10 +27,10 @@
             <td th:text="${question.title}">Entrega</td>
             <td th:text="${question.description}">Se ele entrega</td>
             <td>
-                <a th:if="${question.getEvaluation() != null}" class="btn btn-secondary"
+                <a th:if="${question.getEvaluation() != null}" class="btn btn-primary" style="white-space: nowrap"
                    th:href="'/' + ${question.getEmployee().getName() + '/feedback/' + question.getId()}"
                    th:text="${question.getEvaluation()}"></a>
-                <a th:if="${question.getEvaluation() == null}" class="btn btn-primary"
+                <a th:if="${question.getEvaluation() == null}" class="btn btn-outline-primary" style="white-space: nowrap"
                    th:href="'/' + ${question.getEmployee().getName() + '/feedback/' + question.getId()}"
                    th:text="Avaliar"></a>
             </td>
