@@ -25,17 +25,18 @@
 
         <div class="container-fluid text-left">
             <br>
-            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="btn-group mr-2" role="group" aria-label="Second group">
-                    <button v-on:click="buttonClicked" id="nok" type="button" class="btn btn-secondary">Não atende</button>
-                </div>
-                <div class="btn-group mr-2" role="group" aria-label="First group">
-                    <button v-on:click="buttonClicked" id="ok" type="button" class="btn btn-secondary">Atende</button>
-                </div>
-                <div class="btn-group" role="group" aria-label="Third group">
-                    <button v-on:click="buttonClicked" id="godMode" type="button" class="btn btn-secondary">Excede expectativas</button>
-                </div>
+            <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons">
+                <label for="nok" class="btn btn-outline-primary">
+                    <input v-on:click="buttonClicked" id="nok" ref="nok" type="radio"/>
+                    Não atende</label>
+                <label for="ok" class="btn btn-outline-primary">
+                    <input v-on:click="buttonClicked" id="ok" ref="ok" type="radio"/>
+                    Atende</label>
                 <input type="hidden" th:name="evaluation" th:field="*{evaluation}" v-model="selectionText" />
+                <input ref="evaluation" type="hidden" th:value="${evaluation}" />
+                <label for="godMode" class="btn btn-outline-primary">
+                    <input v-on:click="buttonClicked" id="godMode" ref="godMode" type="radio"/>
+                    Excede expectativas</label>
                 <!--            <div v-if="ok" class="btn-group" role="group" aria-label="Third group">-->
                 <!--                <i class="fas fa-smile"></i>-->
                 <!--            </div>-->
@@ -91,6 +92,13 @@
                 godMode: false,
             }
         },
+        mounted: function () {
+            const evaluationText = this.$refs.evaluation.value;
+            console.log(evaluationText);
+            if (evaluationText === 'Atende') this.setupOk();
+            else if (evaluationText === 'Não atende') this.setupNok();
+            else if (evaluationText === 'Excede expectativas') this.setupGodMode();
+        },
         methods: {
             buttonClicked: function (event) {
                 this.godMode = false;
@@ -102,19 +110,21 @@
                 if (event.target.id === 'ok') this.setupOk();
                 else if (event.target.id === 'nok') this.setupNok();
                 else if (event.target.id === 'godMode') this.setupGodMode();
-
             },
             setupOk: function () {
+                this.$refs.ok.click();
                 this.showImprovement = false;
                 this.ok = true;
                 this.selectionText = "Atende";
             },
             setupNok: function () {
+                this.$refs.nok.click();
                 this.showImprovement = true;
                 this.nok = true;
                 this.selectionText = "Não atende";
             },
             setupGodMode: function () {
+                this.$refs.godMode.click();
                 this.showImprovement = false;
                 this.godMode = true;
                 this.selectionText = "Excede expectativas";

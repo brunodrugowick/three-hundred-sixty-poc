@@ -44,6 +44,7 @@ public class FeedbackController {
                 person,
                 questionId);
         optionalQuestion.ifPresent(question -> model.addAttribute("question", question));
+        optionalQuestion.ifPresent(question -> model.addAttribute("evaluation", question.getEvaluation()));
 
         model.addAttribute("username", "BrunoMuniz");
         return "feedback-question";
