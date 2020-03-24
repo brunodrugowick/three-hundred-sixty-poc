@@ -39,11 +39,11 @@ public class FeedbackController {
     @GetMapping("/{questionId}")
     public String getQuestion(Model model, @PathVariable String person, @PathVariable Long questionId) {
 
-        Optional<Question> question = questionRepository.findByUserUsernameAndEmployeeNameAndId(
+        Optional<Question> optionalQuestion = questionRepository.findByUserUsernameAndEmployeeNameAndId(
                 "BrunoMuniz",
                 person,
                 questionId);
-        question.ifPresent(value -> model.addAttribute("question", value));
+        optionalQuestion.ifPresent(question -> model.addAttribute("question", question));
 
         model.addAttribute("username", "BrunoMuniz");
         return "feedback-question";
