@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -29,18 +30,18 @@ public class FeedbackController {
     }
 
     @GetMapping
-    public String getFeedbacks(Model model, @PathVariable String person) {
-
-        model.addAttribute("questions", questionRepository.findAllByUserUsernameAndEmployeeName("BrunoMuniz", person));
-        model.addAttribute("username", "BrunoMuniz");
+    public String getFeedbacks(Principal principal, Model model, @PathVariable String person) {
+        String username = principal.getName();
+        model.addAttribute("questions", questionRepository.findAllByUserUsernameAndEmployeeName(username, person));
+        model.addAttribute("username", username);
         return "feedback-list-questions";
     }
 
     @GetMapping("/{questionId}")
-    public String getQuestion(Model model, @PathVariable String person, @PathVariable Long questionId) {
+    public String getQuestion(Principal principal, Model model, @PathVariable String person, @PathVariable Long questionId) {
 
         Optional<Question> optionalQuestion = questionRepository.findByUserUsernameAndEmployeeNameAndId(
-                "BrunoMuniz",
+                principal.getName(),
                 person,
                 questionId);
         optionalQuestion.ifPresent(question -> model.addAttribute("question", question));
@@ -51,7 +52,8 @@ public class FeedbackController {
     }
 
     @PostMapping("/{questionId}")
-    public String saveQuestion(Model model,
+    public String saveQuestion(Principal principal,
+                               Model model,
                                @PathVariable String person,
                                @PathVariable Long questionId,
                                @Valid AnswerDto answerDto) {
@@ -64,7 +66,7 @@ public class FeedbackController {
         question.setImprovement(answerDto.getImprovement());
         questionRepository.save(question);
 
-        Optional<Feedback> optionalFeedback = feedbackRepository.findByEmployeeNameAndUserUsername(person, "BrunoMuniz");
+        Optional<Feedback> optionalFeedback = feedbackRepository.findByEmployeeNameAndUserUsername(person, principal.getName());
         optionalFeedback.ifPresent(feedback -> feedback.setState(FeedbackState.STARTED));
         optionalFeedback.ifPresent((feedback -> feedbackRepository.save(feedback)));
 
