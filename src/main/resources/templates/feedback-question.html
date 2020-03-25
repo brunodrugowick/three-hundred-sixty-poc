@@ -33,6 +33,9 @@
                 <label for="nok" class="btn btn-outline-primary">
                     <input v-on:click="buttonClicked" id="nok" ref="nok" type="radio"/>
                     Não atende</label>
+                <label for="partialOk" class="btn btn-outline-primary">
+                    <input v-on:click="buttonClicked" id="partialOk" ref="partialOk" type="radio"/>
+                    Atende parcialmente</label>
                 <label for="ok" class="btn btn-outline-primary">
                     <input v-on:click="buttonClicked" id="ok" ref="ok" type="radio"/>
                     Atende</label>
@@ -93,6 +96,7 @@
                 showImprovement: false,
                 selectionText: '',
                 ok: false,
+                partialOk: false,
                 nok: false,
                 godMode: false,
             }
@@ -101,6 +105,7 @@
             const evaluationText = this.$refs.evaluation.value;
             console.log(evaluationText);
             if (evaluationText === 'Atende') this.setupOk();
+            else if (evaluationText === 'Atende parcialmente') this.setupPartialOk();
             else if (evaluationText === 'Não atende') this.setupNok();
             else if (evaluationText === 'Excede expectativas') this.setupGodMode();
         },
@@ -109,10 +114,12 @@
                 this.godMode = false;
                 this.ok = false;
                 this.nok = false;
+                this.partialOk = false;
 
                 this.showExample = true;
                 this.showImprovement = false;
                 if (event.target.id === 'ok') this.setupOk();
+                else if (event.target.id === 'partialOk') this.setupPartialOk();
                 else if (event.target.id === 'nok') this.setupNok();
                 else if (event.target.id === 'godMode') this.setupGodMode();
             },
@@ -121,6 +128,12 @@
                 this.showImprovement = false;
                 this.ok = true;
                 this.selectionText = "Atende";
+            },
+            setupPartialOk: function () {
+                this.$refs.partialOk.click();
+                this.showImprovement = true;
+                this.partialOk = true;
+                this.selectionText = "Atende parcialmente";
             },
             setupNok: function () {
                 this.$refs.nok.click();
