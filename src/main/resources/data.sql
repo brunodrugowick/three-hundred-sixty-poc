@@ -2,41 +2,41 @@
 insert into base_question (id, position, category, description) values (
 	1, 'Analista de Sistemas', 'Entrega', 'A produtividade na realização das tarefas que estão sob sua responsabilidade, está de acordo com o esperado.');
 insert into base_question (id, position, category, description) values (
-	4, 'Analista de Sistemas', 'Relacionamento Interpessoal', 'Trata a todos com respeito, simpatia, presteza e educação, independentemente da hierarquia e do público, buscando um clima de harmonia, confiança e cooperação. ');
+	2, 'Analista de Sistemas', 'Relacionamento Interpessoal', 'Trata a todos com respeito, simpatia, presteza e educação, independentemente da hierarquia e do público, buscando um clima de harmonia, confiança e cooperação. ');
 insert into base_question (id, position, category, description) values (
-	5, 'Analista de Sistemas', 'Trabalho em Equipe', 'Tem sempre uma postura positiva frente às dificuldades dos colegas, ajudando-os a identificar riscos, oportunidades e soluções, sem comentários depreciativos ou ofensivos.');
+	3, 'Analista de Sistemas', 'Trabalho em Equipe', 'Tem sempre uma postura positiva frente às dificuldades dos colegas, ajudando-os a identificar riscos, oportunidades e soluções, sem comentários depreciativos ou ofensivos.');
 insert into base_question (id, position, category, description) values (
-	8, 'Analista de Sistemas', 'Comunicação Interpessoal', 'Em suas apresentações em público, sabe transmitir de forma clara e objetiva suas ideias, expectativas e opiniões.');
+	4, 'Analista de Sistemas', 'Comunicação Interpessoal', 'Em suas apresentações em público, sabe transmitir de forma clara e objetiva suas ideias, expectativas e opiniões.');
 insert into base_question (id, position, category, description) values (
-	11, 'Analista de Sistemas', 'Comprometimento', 'Se empenha para que os resultados do grupo sejam os melhores possíveis.');
+	5, 'Analista de Sistemas', 'Comprometimento', 'Se empenha para que os resultados do grupo sejam os melhores possíveis.');
 insert into base_question (id, position, category, description) values (
-	15, 'Analista de Sistemas', 'Atitude positiva e resiliência', 'Enfrenta problemas de maneira construtiva.');
+	6, 'Analista de Sistemas', 'Atitude positiva e resiliência', 'Enfrenta problemas de maneira construtiva.');
 insert into base_question (id, position, category, description) values (
-	21, 'Analista de Sistemas', 'Liderança', 'Procura evoluir pessoal, profissional e intelectualmente, buscando aperfeiçoamento e atualização contínua de seus conhecimentos.');
+	7, 'Analista de Sistemas', 'Liderança', 'Procura evoluir pessoal, profissional e intelectualmente, buscando aperfeiçoamento e atualização contínua de seus conhecimentos.');
 insert into base_question (id, position, category, description) values (
-	22, 'Analista de Sistemas', 'Maturidade/Foco', 'Diferencia as coisas importantes das não importantes');
+	8, 'Analista de Sistemas', 'Maturidade/Foco', 'Diferencia as coisas importantes das não importantes');
 insert into base_question (id, position, category, description) values (
-	23, 'Coordenador', 'Entrega', 'Participa ativamente em novas oportunidades de negócio?');
+	9, 'Coordenador', 'Entrega', 'Participa ativamente em novas oportunidades de negócio?');
 insert into base_question (id, position, category, description) values (
-	24, 'Coordenador', 'Entrega', 'Tem visibilidade e controle das prospecções relevantes, ponderando probabilidade de fechamento, custos de pré-vendas e relevância para sua área e empresa?');
+	10, 'Coordenador', 'Entrega', 'Tem visibilidade e controle das prospecções relevantes, ponderando probabilidade de fechamento, custos de pré-vendas e relevância para sua área e empresa?');
 insert into base_question (id, position, category, description) values (
-	26, 'Coordenador', 'Entrega', 'Direciona a equipe para agregar maior valor e diferenciação nas propostas apresentadas para os clientes?');
+	11, 'Coordenador', 'Entrega', 'Direciona a equipe para agregar maior valor e diferenciação nas propostas apresentadas para os clientes?');
 insert into base_question (id, position, category, description) values (
-	1, 'Coordenador', 'Entrega', 'A produtividade na realização das tarefas que estão sob sua responsabilidade, está de acordo com o esperado.');
+	12, 'Coordenador', 'Entrega', 'A produtividade na realização das tarefas que estão sob sua responsabilidade, está de acordo com o esperado.');
 insert into base_question (id, position, category, description) values (
-	4, 'Coordenador', 'Relacionamento Interpessoal', 'Trata a todos com respeito, simpatia, presteza e educação, independentemente da hierarquia e do público, buscando um clima de harmonia, confiança e cooperação. ');
+	13, 'Coordenador', 'Relacionamento Interpessoal', 'Trata a todos com respeito, simpatia, presteza e educação, independentemente da hierarquia e do público, buscando um clima de harmonia, confiança e cooperação. ');
 insert into base_question (id, position, category, description) values (
-	5, 'Coordenador', 'Trabalho em Equipe', 'Tem sempre uma postura positiva frente às dificuldades dos colegas, ajudando-os a identificar riscos, oportunidades e soluções, sem comentários depreciativos ou ofensivos.');
+	14, 'Coordenador', 'Trabalho em Equipe', 'Tem sempre uma postura positiva frente às dificuldades dos colegas, ajudando-os a identificar riscos, oportunidades e soluções, sem comentários depreciativos ou ofensivos.');
 insert into base_question (id, position, category, description) values (
-	8, 'Coordenador', 'Comunicação Interpessoal', 'Em suas apresentações em público, sabe transmitir de forma clara e objetiva suas ideias, expectativas e opiniões.');
+	15, 'Coordenador', 'Comunicação Interpessoal', 'Em suas apresentações em público, sabe transmitir de forma clara e objetiva suas ideias, expectativas e opiniões.');
 insert into base_question (id, position, category, description) values (
-	11, 'Coordenador', 'Comprometimento', 'Se empenha para que os resultados do grupo sejam os melhores possíveis.');
+	16, 'Coordenador', 'Comprometimento', 'Se empenha para que os resultados do grupo sejam os melhores possíveis.');
 insert into base_question (id, position, category, description) values (
-	15, 'Coordenador', 'Atitude positiva e resiliência', 'Enfrenta problemas de maneira construtiva.');
+	17, 'Coordenador', 'Atitude positiva e resiliência', 'Enfrenta problemas de maneira construtiva.');
 insert into base_question (id, position, category, description) values (
-	21, 'Coordenador', 'Liderança', 'Procura evoluir pessoal, profissional e intelectualmente, buscando aperfeiçoamento e atualização contínua de seus conhecimentos.');
+	18, 'Coordenador', 'Liderança', 'Procura evoluir pessoal, profissional e intelectualmente, buscando aperfeiçoamento e atualização contínua de seus conhecimentos.');
 insert into base_question (id, position, category, description) values (
-	22, 'Coordenador', 'Maturidade/Foco', 'Diferencia as coisas importantes das não importantes');
+	19, 'Coordenador', 'Maturidade/Foco', 'Diferencia as coisas importantes das não importantes');
 
 -- Insert the people that are going to be evaluated.
 insert into employee (id, name, position) values (
