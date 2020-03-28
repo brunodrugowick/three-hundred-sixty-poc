@@ -58,17 +58,17 @@
 
         <br>
 
-        <div v-if="showExample" class="container-fluid text-left">
+        <div class="container-fluid text-left">
             <div class="form-group">
                 <label for="example">Exemplo</label>
-                <textarea th:field="*{example}" th:name="example" class="form-control" id="example" rows="2"></textarea>
+                <textarea th:field="*{example}" th:name="example" class="form-control" id="example" rows="1"></textarea>
             </div>
         </div>
 
         <div v-if="showImprovement" class="container-fluid text-left">
             <div class="form-group">
                 <label for="improvement">Sugestão de Melhoria</label>
-                <textarea th:field="*{improvement}" th:name="improvement" class="form-control" id="improvement" rows="3"></textarea>
+                <textarea th:field="*{improvement}" th:name="improvement" class="form-control" id="improvement" rows="2"></textarea>
             </div>
         </div>
 
@@ -82,6 +82,10 @@
     </form>
 </div>
 
+<div class="container-fluid" id="footer">
+    <br><hr><br>
+</div>
+
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <script src="/webjars/vue/2.6.11/vue.js"></script>
@@ -92,7 +96,6 @@
         el: '#page',
         data() {
             return {
-                showExample: false,
                 showImprovement: false,
                 selectionText: '',
                 ok: false,
@@ -103,7 +106,6 @@
         },
         mounted: function () {
             const evaluationText = this.$refs.evaluation.value;
-            console.log(evaluationText);
             if (evaluationText === 'Atende') this.setupOk();
             else if (evaluationText === 'Atende parcialmente') this.setupPartialOk();
             else if (evaluationText === 'Não atende') this.setupNok();
@@ -116,7 +118,6 @@
                 this.nok = false;
                 this.partialOk = false;
 
-                this.showExample = true;
                 this.showImprovement = false;
                 if (event.target.id === 'ok') this.setupOk();
                 else if (event.target.id === 'partialOk') this.setupPartialOk();
