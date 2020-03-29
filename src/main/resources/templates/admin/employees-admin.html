@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href='/webjars/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header (${username})"></div>
+<br>
+<div class="float-left" th:replace="fragments/admin-page-title :: admin-page-title ('Lista de Funcionários')"></div>
+<div class="container-fluid">
+    <a class="btn btn-primary"
+       style="white-space: nowrap"
+       href="/admin/employees/new">Novo</a>
+</div>
+<br>
+<div class="container-fluid">
+
+    <table class="table table-striped">
+        <thead>
+        <tr class="text-left">
+            <th scope="col">Funcionário</th>
+            <th scope="col">Cargo</th>
+            <th scope="col">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-left" th:each="employee : ${employees}">
+            <td th:text="${employee.getName()}"></td>
+            <td th:text="${employee.getPosition()}"></td>
+            <td>
+                <a class="btn btn-primary"
+                   style="white-space: nowrap"
+                    th:href="'/admin/employees/' + ${employee.getId()}"
+                    th:text="Editar"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container-fluid" id="footer">
+    <br><hr><br>
+</div>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

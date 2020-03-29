@@ -19,7 +19,7 @@ public class HomePageController {
     @GetMapping
     public String homePage(Principal principal, Model model) {
         String username = principal.getName();
-        model.addAttribute("feedbacks", feedbackRepository.findAllByUserUsername(username));
+        model.addAttribute("feedbacks", feedbackRepository.findAllByEvaluatorEmail(username));
         model.addAttribute("username", username);
         return "index";
     }

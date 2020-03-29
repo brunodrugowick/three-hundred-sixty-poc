@@ -32,7 +32,7 @@ public class FeedbackController {
     @GetMapping
     public String getFeedbacks(Principal principal, Model model, @PathVariable String person) {
         String username = principal.getName();
-        model.addAttribute("questions", questionRepository.findAllByUserUsernameAndEmployeeName(username, person));
+        model.addAttribute("questions", questionRepository.findAllByEvaluatorNameAndEvaluatedName(username, person));
         model.addAttribute("username", username);
         return "feedback-list-questions";
     }
@@ -40,7 +40,7 @@ public class FeedbackController {
     @GetMapping("/{questionId}")
     public String getQuestion(Principal principal, Model model, @PathVariable String person, @PathVariable Long questionId) {
 
-        Optional<Question> optionalQuestion = questionRepository.findByUserUsernameAndEmployeeNameAndId(
+        Optional<Question> optionalQuestion = questionRepository.findByEvaluatorNameAndEvaluatedNameAndId(
                 principal.getName(),
                 person,
                 questionId);
@@ -66,7 +66,7 @@ public class FeedbackController {
         question.setImprovement(answerDto.getImprovement());
         questionRepository.save(question);
 
-        Optional<Feedback> optionalFeedback = feedbackRepository.findByEmployeeNameAndUserUsername(person, principal.getName());
+        Optional<Feedback> optionalFeedback = feedbackRepository.findByEvaluatedNameAndEvaluatorName(person, principal.getName());
         optionalFeedback.ifPresent(feedback -> feedback.setState(FeedbackState.STARTED));
         optionalFeedback.ifPresent((feedback -> feedbackRepository.save(feedback)));
 
