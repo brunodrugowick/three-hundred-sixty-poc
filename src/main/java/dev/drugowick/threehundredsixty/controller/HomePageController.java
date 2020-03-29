@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.security.Principal;
 
 @Controller
-public class HomePageController {
+public class HomePageController extends BaseController {
 
     private FeedbackRepository feedbackRepository;
 
@@ -20,7 +20,6 @@ public class HomePageController {
     public String homePage(Principal principal, Model model) {
         String username = principal.getName();
         model.addAttribute("feedbacks", feedbackRepository.findAllByEvaluatorEmail(username));
-        model.addAttribute("username", username);
         return "index";
     }
 }

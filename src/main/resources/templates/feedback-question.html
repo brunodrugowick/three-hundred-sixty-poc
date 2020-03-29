@@ -10,7 +10,7 @@
 
 <div th:replace="fragments/header :: header (${username})"></div>
 <br>
-<div th:replace="fragments/admin-page-title :: admin-page-title (${question.getEmployee().getName()} + ' (' + ${question.getEmployee().getPosition()} + ')')"></div>
+<div th:replace="fragments/admin-page-title :: admin-page-title (${question.getEvaluated().getName()} + ' (' + ${question.getEvaluated().getPosition()} + ')')"></div>
 <br><hr>
 <div class="container-fluid" id="page">
     <form th:object="${question}" th:method="post">

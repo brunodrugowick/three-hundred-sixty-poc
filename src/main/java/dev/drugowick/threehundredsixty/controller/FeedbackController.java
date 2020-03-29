@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("{person}/feedback")
-public class FeedbackController {
+public class FeedbackController extends BaseController {
 
     private QuestionRepository questionRepository;
     private FeedbackRepository feedbackRepository;
@@ -33,7 +33,6 @@ public class FeedbackController {
     public String getFeedbacks(Principal principal, Model model, @PathVariable String person) {
         String username = principal.getName();
         model.addAttribute("questions", questionRepository.findAllByEvaluatorNameAndEvaluatedName(username, person));
-        model.addAttribute("username", username);
         return "feedback-list-questions";
     }
 
@@ -47,7 +46,6 @@ public class FeedbackController {
         optionalQuestion.ifPresent(question -> model.addAttribute("question", question));
         optionalQuestion.ifPresent(question -> model.addAttribute("evaluation", question.getEvaluation()));
 
-        model.addAttribute("username", "BrunoMuniz");
         return "feedback-question";
     }
 

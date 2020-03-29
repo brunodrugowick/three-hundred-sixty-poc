@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class ErrorController {
+public class ErrorController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(ErrorController.class);
 

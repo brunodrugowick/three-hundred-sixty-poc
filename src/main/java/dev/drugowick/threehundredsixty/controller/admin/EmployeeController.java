@@ -1,18 +1,22 @@
 package dev.drugowick.threehundredsixty.controller.admin;
 
+import dev.drugowick.threehundredsixty.controller.BaseController;
 import dev.drugowick.threehundredsixty.domain.entity.Employee;
 import dev.drugowick.threehundredsixty.domain.repository.EmployeeRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
-public class EmployeeController {
+public class EmployeeController extends BaseController {
 
     private final EmployeeRepository employeeRepository;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -20,11 +24,6 @@ public class EmployeeController {
     public EmployeeController(EmployeeRepository employeeRepository, BCryptPasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    @ModelAttribute("username")
-    public String username(Principal principal) {
-        return principal.getName();
     }
 
     @GetMapping

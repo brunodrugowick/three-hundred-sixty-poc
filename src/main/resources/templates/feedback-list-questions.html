@@ -10,7 +10,7 @@
 
 <div th:replace="fragments/header :: header (${username})"></div>
 <br>
-<div th:replace="fragments/admin-page-title :: admin-page-title (${questions.get(0).getEmployee().getName()} + ' (' + ${questions.get(0).getEmployee().getPosition()} + ')')"></div>
+<div th:replace="fragments/admin-page-title :: admin-page-title (${questions.get(0).getEvaluated().getName()} + ' (' + ${questions.get(0).getEvaluated().getPosition()} + ')')"></div>
 <br>
 <div class="container-fluid">
 
@@ -28,10 +28,10 @@
             <td th:text="${question.description}">Se ele entrega</td>
             <td>
                 <a th:if="${question.getEvaluation() != null}" class="btn btn-primary" style="white-space: nowrap"
-                   th:href="'/' + ${question.getEmployee().getName() + '/feedback/' + question.getId()}"
+                   th:href="'/' + ${question.getEvaluated().getName() + '/feedback/' + question.getId()}"
                    th:text="${question.getEvaluation()}"></a>
                 <a th:if="${question.getEvaluation() == null}" class="btn btn-outline-primary" style="white-space: nowrap"
-                   th:href="'/' + ${question.getEmployee().getName() + '/feedback/' + question.getId()}"
+                   th:href="'/' + ${question.getEvaluated().getName() + '/feedback/' + question.getId()}"
                    th:text="Avaliar"></a>
             </td>
         </tr>
