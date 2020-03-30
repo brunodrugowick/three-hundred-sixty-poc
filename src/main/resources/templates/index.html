@@ -35,17 +35,16 @@
                         <td>
                             <a th:if="${feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-outline-primary"
                                style="white-space: nowrap"
-                               th:href="'/' + ${feedback.getEvaluated().getName() + '/feedback'}"
+                               th:href="${'/feedback/' + feedback.getKey().getEvaluatedId()}"
                                th:text="${feedback.getState().state}"></a>
                             <a th:if="${!feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-primary"
                                style="white-space: nowrap"
-                               th:href="'/' + ${feedback.getEvaluated().getName() + '/feedback'}"
+                               th:href="${'/feedback/' + feedback.getKey().getEvaluatedId()}"
                                th:text="${feedback.getState().state}"></a>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-                </p>
             </div>
         </div>
     </div>

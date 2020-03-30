@@ -6,9 +6,11 @@ Por enquanto os feedbacks são inciados mas não há controle de finalização d
 
 # Segurança
 
-A segurança é bem básica no momento, existe apenas dois usuários cadastradas em memória.
+Todas as senhas são `password` e não há como mudar isso no momento, mesmo para novos usuários.
 
-Há dois usuários:
+Há 4 usuários:
 
 - BrunoMuniz/password
 - HeitorMatsui/password
+- FelipeBanzai/password
+- CiroBottine/password
