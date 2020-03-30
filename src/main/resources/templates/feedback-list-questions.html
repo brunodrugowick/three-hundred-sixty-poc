@@ -28,10 +28,10 @@
             <td th:text="${question.description}">Se ele entrega</td>
             <td>
                 <a th:if="${question.getEvaluation() != null}" class="btn btn-primary" style="white-space: nowrap"
-                   th:href="'/' + ${question.getEvaluated().getName() + '/feedback/' + question.getId()}"
+                   th:href="'/feedback/' + ${question.getEvaluated().getId() + '/question/' + question.getId()}"
                    th:text="${question.getEvaluation()}"></a>
                 <a th:if="${question.getEvaluation() == null}" class="btn btn-outline-primary" style="white-space: nowrap"
-                   th:href="'/' + ${question.getEvaluated().getName() + '/feedback/' + question.getId()}"
+                   th:href="'/feedback/' + ${question.getEvaluated().getId() + '/question/' + question.getId()}"
                    th:text="Avaliar"></a>
             </td>
         </tr>

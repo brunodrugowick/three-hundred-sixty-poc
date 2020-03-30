@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("{person}/feedback")
+@RequestMapping("/feedback/{evaluatedId}")
 public class FeedbackController extends BaseController {
 
     private QuestionRepository questionRepository;
@@ -31,9 +31,9 @@ public class FeedbackController extends BaseController {
     }
 
     @GetMapping
-    public String getFeedbacks(Principal principal, Model model, @PathVariable String person) {
+    public String getFeedbacks(Principal principal, Model model, @PathVariable Long evaluatedId) {
         String username = principal.getName();
-        List<Question> questions = questionRepository.findAllByEvaluatorNameAndEvaluatedName(username, person);
+        List<Question> questions = questionRepository.findAllByEvaluatorEmailAndEvaluatedId(username, evaluatedId);
         if (questions.size() == 0) {
             throw new RuntimeException("Feedback inexistente ou inválido para o usuário " + principal.getName());
         }
@@ -41,12 +41,12 @@ public class FeedbackController extends BaseController {
         return "feedback-list-questions";
     }
 
-    @GetMapping("/{questionId}")
-    public String getQuestion(Principal principal, Model model, @PathVariable String person, @PathVariable Long questionId) {
+    @GetMapping("/question/{questionId}")
+    public String getQuestion(Principal principal, Model model, @PathVariable Long evaluatedId, @PathVariable Long questionId) {
 
-        Optional<Question> optionalQuestion = questionRepository.findByEvaluatorNameAndEvaluatedNameAndId(
+        Optional<Question> optionalQuestion = questionRepository.findByEvaluatorEmailAndEvaluatedIdAndId(
                 principal.getName(),
-                person,
+                evaluatedId,
                 questionId);
         if (optionalQuestion.isPresent()) {
             model.addAttribute("question", optionalQuestion.get());
@@ -59,10 +59,10 @@ public class FeedbackController extends BaseController {
         return "feedback-question";
     }
 
-    @PostMapping("/{questionId}")
+    @PostMapping("/question/{questionId}")
     public String saveQuestion(Principal principal,
                                Model model,
-                               @PathVariable String person,
+                               @PathVariable Long evaluatedId,
                                @PathVariable Long questionId,
                                @Valid AnswerDto answerDto) {
 
@@ -74,10 +74,10 @@ public class FeedbackController extends BaseController {
         question.setImprovement(answerDto.getImprovement());
         questionRepository.save(question);
 
-        Optional<Feedback> optionalFeedback = feedbackRepository.findByEvaluatedNameAndEvaluatorName(person, principal.getName());
+        Optional<Feedback> optionalFeedback = feedbackRepository.findByEvaluatedIdAndEvaluatorEmail(evaluatedId, principal.getName());
         optionalFeedback.ifPresent(feedback -> feedback.setState(FeedbackState.STARTED));
         optionalFeedback.ifPresent((feedback -> feedbackRepository.save(feedback)));
 
-        return "redirect:/" + person + "/feedback";
+        return "redirect:/feedback/" + evaluatedId;
     }
 }
