@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href='/webjars/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+    <link href="/webjars/font-awesome/5.12.0/css/fontawesome.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Pergunta</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header (${username}, ${admin})"></div>
+<br>
+<div th:replace="fragments/admin-page-title :: admin-page-title (${question.id == null ? 'Criar Pergunta' : 'Editar Pergunta'})"></div>
+<div class="alert alert-warning" role="alert">
+    Atenção! A criação ou edição de perguntas não reflete imediatamente nos Feedbacks existentes.
+    Novas perguntas ou perguntas alteradas serão refletidas apenas em novos Feedbacks.
+    Opcionalmente, é possivel reprocessar todos os Feedbacks.
+</div>
+<br><hr>
+<div class="container" id="page">
+    <form th:object="${question}" th:method="post">
+        <input type="hidden" name="id" th:value="*{id}" />
+        <br>
+        <div class="form-group row">
+            <label for="position" class="col col-sm-4">Cargo</label>
+            <input th:field="*{position}" class="form-control col-sm-8" id="position" placeholder="A que cargo se aplica esta pergunta" type="text"/>
+        </div>
+        <div class="form-group row">
+            <label for="category" class="col col-sm-4">Categoria</label>
+            <input th:field="*{category}" class="form-control col-sm-8" id="category" placeholder="Categoria" type="text"/>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col col-sm-4">Descrição</label>
+            <input th:field="*{description}" class="form-control col-sm-8" id="description" placeholder="Descrição" type="text"/>
+        </div>
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+        <div class="container-fluid text-left">
+            <div class="float-md-none">
+                <button class=" btn btn-primary" type="submit">Salvar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container-fluid" id="footer">
+    <br><hr><br>
+</div>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script src="/webjars/vue/2.6.11/vue.js"></script>
+</body>
+</html>

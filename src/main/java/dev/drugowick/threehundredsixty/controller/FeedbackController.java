@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -32,7 +33,11 @@ public class FeedbackController extends BaseController {
     @GetMapping
     public String getFeedbacks(Principal principal, Model model, @PathVariable String person) {
         String username = principal.getName();
-        model.addAttribute("questions", questionRepository.findAllByEvaluatorNameAndEvaluatedName(username, person));
+        List<Question> questions = questionRepository.findAllByEvaluatorNameAndEvaluatedName(username, person);
+        if (questions.size() == 0) {
+            throw new RuntimeException("Feedback inexistente ou inválido para o usuário " + principal.getName());
+        }
+        model.addAttribute("questions", questions);
         return "feedback-list-questions";
     }
 
@@ -43,7 +48,12 @@ public class FeedbackController extends BaseController {
                 principal.getName(),
                 person,
                 questionId);
-        optionalQuestion.ifPresent(question -> model.addAttribute("question", question));
+        if (optionalQuestion.isPresent()) {
+            model.addAttribute("question", optionalQuestion.get());
+        } else {
+            throw new RuntimeException("Pergunta inexistente ou inválida para o usuário " + principal.getName());
+        }
+
         optionalQuestion.ifPresent(question -> model.addAttribute("evaluation", question.getEvaluation()));
 
         return "feedback-question";

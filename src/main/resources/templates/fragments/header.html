@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link href='/webjars/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
 
-    <meta charset="UTF-8">
-    <title>Restaurants</title>
-</head>
-<body th:fragment="header (username)">
+<body th:fragment="header (username, admin)">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" th:fragment="header">
-    <a class="navbar-brand" href="/">Feedback Central</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" th:fragment="header">
+    <span class="navbar-brand mb-0 h1">
+        <img src="/webjars/font-awesome/5.12.0/svgs/solid/bell.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        Feedback Center</span>
     <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
             class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
         <span class="navbar-toggler-icon"></span>
@@ -20,16 +17,31 @@
             <li class="nav-item">
                 <a class="nav-link" href="/">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/admin/employees">Funcionários</a>
+            <li th:if="${admin}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Administração
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/admin/questions">Perguntas</a>
+                    <a class="dropdown-item" href="/admin/employees">Funcionários</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item disabled" href="#">Administração avançada</a>
+                </div>
             </li>
         </ul>
 <!--        <form class="form-inline my-2 my-lg-0">-->
 <!--            <input aria-label="Search" class="form-control mr-sm-2" placeholder="Search" type="search">-->
 <!--            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
 <!--        </form>-->
-            <div class="text-light">
-                Bem-vindo, <span th:text="${username}"></span>
+            <div>
+                <span th:text="${username}"></span>
+            </div>
+            <div th:if="${admin}" class="-caret-left">
+                <span class="container">
+                    <img src="/webjars/font-awesome/5.12.0/svgs/solid/flag.svg" width="15" height="15"
+                         class="d-inline-block align-middle"
+                         title="Você e um administrador.">
+                </span>
             </div>
 
             <div class="text-light">
@@ -44,8 +56,5 @@
             </div>
     </div>
 </nav>
-
-<script src="/webjars/jquery/jquery.min.js"></script>
-<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

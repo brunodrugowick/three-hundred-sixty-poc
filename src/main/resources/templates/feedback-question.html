@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div th:replace="fragments/header :: header (${username})"></div>
+<div th:replace="fragments/header :: header (${username}, ${admin})"></div>
 <br>
 <div th:replace="fragments/admin-page-title :: admin-page-title (${question.getEvaluated().getName()} + ' (' + ${question.getEvaluated().getPosition()} + ')')"></div>
 <br><hr>
