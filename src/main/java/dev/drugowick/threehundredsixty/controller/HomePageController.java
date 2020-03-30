@@ -1,14 +1,16 @@
 package dev.drugowick.threehundredsixty.controller;
 
+import dev.drugowick.threehundredsixty.domain.entity.Feedback;
 import dev.drugowick.threehundredsixty.domain.repository.FeedbackRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
-public class HomePageController {
+public class HomePageController extends BaseController {
 
     private FeedbackRepository feedbackRepository;
 
@@ -19,8 +21,9 @@ public class HomePageController {
     @GetMapping
     public String homePage(Principal principal, Model model) {
         String username = principal.getName();
-        model.addAttribute("feedbacks", feedbackRepository.findAllByUserUsername(username));
-        model.addAttribute("username", username);
+        List<Feedback> feedbacks = feedbackRepository.findAllByEvaluatorEmail(username);
+        model.addAttribute("feedbacks", feedbacks);
+        model.addAttribute("feedbackCount", feedbacks.size());
         return "index";
     }
 }

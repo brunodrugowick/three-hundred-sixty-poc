@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
 
-    List<Feedback> findAllByUserUsername(String username);
-    Optional<Feedback> findByEmployeeNameAndUserUsername(String employeeName, String username);
+    List<Feedback> findAllByEvaluatorEmail(String evaluator);
+    Optional<Feedback> findByEvaluatedNameAndEvaluatorName(String evaluated, String evaluator);
+
 }

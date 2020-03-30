@@ -8,37 +8,64 @@
 </head>
 <body>
 
-<div th:replace="fragments/header :: header (${username})"></div>
+<div th:replace="fragments/header :: header (${username}, ${admin})"></div>
 <br>
-<div th:replace="fragments/admin-page-title :: admin-page-title ('Avaliações')"></div>
+<div th:replace="fragments/admin-page-title :: admin-page-title ('Bem-vindo, ' + ${fullname})"></div>
 <br>
-<div class="container-fluid">
 
-    <table class="table table-striped">
-        <thead>
-        <tr class="text-left">
-            <th scope="col">Funcionário</th>
-            <th scope="col">Cargo</th>
-            <th scope="col">Avaliação</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="text-left" th:each="feedback : ${feedbacks}">
-            <td th:text="${feedback.getEmployee().getName()}"></td>
-            <td th:text="${feedback.getEmployee().getPosition()}"></td>
-            <td>
-                <a th:if="${feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-outline-primary"
-                   style="white-space: nowrap"
-                    th:href="'/' + ${feedback.getEmployee().getName() + '/feedback'}"
-                    th:text="${feedback.getState().state}"></a>
-                <a th:if="${!feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-primary"
-                   style="white-space: nowrap"
-                    th:href="'/' + ${feedback.getEmployee().getName() + '/feedback'}"
-                    th:text="${feedback.getState().state}"></a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<div th:if="${feedbackCount > 0}" class="container-fluid">
+    <div class="container-fluid text-left">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Você tem avaliações formais disponíveis!</h5>
+                <p class="card-text">Organize-se para responder as avaliações a seguir. Sua opinião é muito importante, portanto, seja claro e objetivo em suas respostas.
+                    Traga exemplos, sempre que possivel, e pontos de melhoria quando julgar que uma melhora é necessária.<br>
+                <table class="table table-striped">
+                    <thead>
+                    <tr class="text-left">
+                        <th scope="col">Funcionário</th>
+                        <th scope="col">Cargo</th>
+                        <th scope="col">Avaliação</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="text-left" th:each="feedback : ${feedbacks}">
+                        <td th:text="${feedback.getEvaluated().getName()}"></td>
+                        <td th:text="${feedback.getEvaluated().getPosition()}"></td>
+                        <td>
+                            <a th:if="${feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-outline-primary"
+                               style="white-space: nowrap"
+                               th:href="'/' + ${feedback.getEvaluated().getName() + '/feedback'}"
+                               th:text="${feedback.getState().state}"></a>
+                            <a th:if="${!feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-primary"
+                               style="white-space: nowrap"
+                               th:href="'/' + ${feedback.getEvaluated().getName() + '/feedback'}"
+                               th:text="${feedback.getState().state}"></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                </p>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+
+<div class="container-fluid">
+    <div class="container-fluid text-left">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Feedback Espontâneo</h5>
+                <p class="card-text">Quer reforçar um comportamento positivo, parabenizar uma entrega ou sugerir uma melhoria? Este é o lugar!</p>
+                <a class="btn btn-primary" href="#">Dê um Feedback Espontâneo</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" id="footer">
+    <br><br>
 </div>
 
 <script src="/webjars/jquery/jquery.min.js"></script>

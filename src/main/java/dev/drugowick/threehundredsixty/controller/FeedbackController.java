@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("{person}/feedback")
-public class FeedbackController {
+public class FeedbackController extends BaseController {
 
     private QuestionRepository questionRepository;
     private FeedbackRepository feedbackRepository;
@@ -32,22 +33,29 @@ public class FeedbackController {
     @GetMapping
     public String getFeedbacks(Principal principal, Model model, @PathVariable String person) {
         String username = principal.getName();
-        model.addAttribute("questions", questionRepository.findAllByUserUsernameAndEmployeeName(username, person));
-        model.addAttribute("username", username);
+        List<Question> questions = questionRepository.findAllByEvaluatorNameAndEvaluatedName(username, person);
+        if (questions.size() == 0) {
+            throw new RuntimeException("Feedback inexistente ou inválido para o usuário " + principal.getName());
+        }
+        model.addAttribute("questions", questions);
         return "feedback-list-questions";
     }
 
     @GetMapping("/{questionId}")
     public String getQuestion(Principal principal, Model model, @PathVariable String person, @PathVariable Long questionId) {
 
-        Optional<Question> optionalQuestion = questionRepository.findByUserUsernameAndEmployeeNameAndId(
+        Optional<Question> optionalQuestion = questionRepository.findByEvaluatorNameAndEvaluatedNameAndId(
                 principal.getName(),
                 person,
                 questionId);
-        optionalQuestion.ifPresent(question -> model.addAttribute("question", question));
+        if (optionalQuestion.isPresent()) {
+            model.addAttribute("question", optionalQuestion.get());
+        } else {
+            throw new RuntimeException("Pergunta inexistente ou inválida para o usuário " + principal.getName());
+        }
+
         optionalQuestion.ifPresent(question -> model.addAttribute("evaluation", question.getEvaluation()));
 
-        model.addAttribute("username", "BrunoMuniz");
         return "feedback-question";
     }
 
@@ -66,7 +74,7 @@ public class FeedbackController {
         question.setImprovement(answerDto.getImprovement());
         questionRepository.save(question);
 
-        Optional<Feedback> optionalFeedback = feedbackRepository.findByEmployeeNameAndUserUsername(person, principal.getName());
+        Optional<Feedback> optionalFeedback = feedbackRepository.findByEvaluatedNameAndEvaluatorName(person, principal.getName());
         optionalFeedback.ifPresent(feedback -> feedback.setState(FeedbackState.STARTED));
         optionalFeedback.ifPresent((feedback -> feedbackRepository.save(feedback)));
 

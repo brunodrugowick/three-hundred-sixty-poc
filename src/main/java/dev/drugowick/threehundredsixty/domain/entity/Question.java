@@ -1,6 +1,5 @@
 package dev.drugowick.threehundredsixty.domain.entity;
 
-import dev.drugowick.threehundredsixty.domain.entity.security.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,12 +22,12 @@ public class Question {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "evaluator_id", nullable = false)
+    private Employee evaluator;
 
     @ManyToOne
     @JoinColumn(name = "evaluated_id", nullable = false)
-    private Employee employee;
+    private Employee evaluated;
 
     private String category;
     private String title;
@@ -38,12 +37,12 @@ public class Question {
     private String example;
     private String improvement;
 
-    public Question(String category, String title, String description, Employee employee, User user) {
+    public Question(String category, String title, String description, Employee evaluated, Employee evaluator) {
         this.category = category;
         this.title = title;
         this.description = description;
-        this.employee = employee;
-        this.user = user;
+        this.evaluated = evaluated;
+        this.evaluator = evaluator;
     }
 
     //TODO default toString methods from Lombok causes overflow

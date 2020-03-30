@@ -39,24 +39,14 @@ insert into base_question (id, position, category, description) values (
 	19, 'Coordenador', 'Maturidade/Foco', 'Diferencia as coisas importantes das não importantes');
 
 -- Insert the people that are going to be evaluated.
-insert into employee (id, name, position) values (
-    1, 'HeitorMatsui', 'Coordenador');
-insert into employee (id, name, position) values (
-    2, 'BrunoMuniz', 'Coordenador');
-insert into employee (id, name, position) values (
-    3, 'FelipeBanzai', 'Analista de Sistemas');
-insert into employee (id, name, position) values (
-    4, 'CiroBottini', 'Analista de Sistemas');
-
--- Insert users for the application
--- this should not be here... every employee is a user, right? Will tackle that later...
-insert into user (id, username, password, enabled) values (
-    1, 'BrunoMuniz', '123', true);
-insert into user (id, username, password, enabled) values (
-    2, 'HeitorMatsui', '123', true);
+insert into employee (id, name, position, email, password, roles, enabled) values
+    (1, 'Heitor Matsui', 'Coordenador', 'HeitorMatsui', '$2a$10$M7OAYIGqApcaVQ8P2Th2Wef.pt1wTYdHBRwT7Q9XE8V3BHo37bfZe', 'ROLE_USER,ROLE_ADMIN', true),
+    (2, 'Bruno Muniz', 'Coordenador', 'BrunoMuniz', '$2a$10$M7OAYIGqApcaVQ8P2Th2Wef.pt1wTYdHBRwT7Q9XE8V3BHo37bfZe', 'ROLE_USER,ROLE_ADMIN', true),
+    (3, 'Felipe Banzai', 'Analista de Sistemas', 'FelipeBanzai', '$2a$10$M7OAYIGqApcaVQ8P2Th2Wef.pt1wTYdHBRwT7Q9XE8V3BHo37bfZe', 'ROLE_USER,ROLE_ADMIN', true),
+    (4, 'Ciro Bottini', 'Analista de Sistemas', 'CiroBottini', '$2a$10$M7OAYIGqApcaVQ8P2Th2Wef.pt1wTYdHBRwT7Q9XE8V3BHo37bfZe', 'ROLE_USER,ROLE_ADMIN', true);
 
 -- Finally, insert the mapping between user and employees to create a feedback for the user to fill
 -- this here is the reason users and employees do not have auto-generated ids. For now.
-insert into feedback (user_id, employee_id, state) values
+insert into feedback (evaluator_id, evaluated_id, state) values
     (1, 1, 'NOT_STARTED'), (1, 3, 'NOT_STARTED'), (1, 4, 'NOT_STARTED'), (2, 2, 'NOT_STARTED'),
     (2, 3, 'NOT_STARTED'), (2, 4, 'NOT_STARTED');

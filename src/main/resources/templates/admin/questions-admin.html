@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href='/webjars/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+
+    <meta charset="UTF-8">
+    <title>Perguntas</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header (${username}, ${admin})"></div>
+<br>
+<div class="float-left" th:replace="fragments/admin-page-title :: admin-page-title ('Administração de Perguntas')"></div>
+<div class="container-fluid">
+    <a class="btn btn-primary"
+       style="white-space: nowrap"
+       href="/admin/questions/new">Nova</a>
+</div>
+<br>
+<div class="container-fluid">
+
+    <table class="table table-striped">
+        <thead>
+        <tr class="text-left">
+            <th scope="col">Cargo</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Pergunta</th>
+            <th scope="col">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-left" th:each="question : ${questions}">
+            <td th:text="${question.getPosition()}"></td>
+            <td th:text="${question.getCategory()}"></td>
+            <td th:text="${question.getDescription()}"></td>
+            <td>
+                <a class="btn btn-primary"
+                   style="white-space: nowrap"
+                    th:href="'/admin/questions/' + ${question.getId()}"
+                    th:text="Editar"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container-fluid" id="footer">
+    <br><hr><br>
+</div>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 package dev.drugowick.threehundredsixty.domain.entity;
 
-import dev.drugowick.threehundredsixty.domain.entity.security.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * A Feedback relates a user to an employee being evaluated.
@@ -14,20 +14,25 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Feedback {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private Key key = new Key();
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToOne
+    @MapsId("evaluatorId")
+    private Employee evaluator;
 
-    @OneToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+    @ManyToOne
+    @MapsId("evaluatedId")
+    private Employee evaluated;
+
+    @Embeddable
+    @Data
+    public static class Key implements Serializable {
+        private Long evaluatorId;
+        private Long evaluatedId;
+    }
 
     @Enumerated(value = EnumType.STRING)
     private FeedbackState state = FeedbackState.NOT_STARTED;
 
-    //TODO default toString methods from Lombok causes overflow
 }
