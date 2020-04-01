@@ -4,6 +4,7 @@ import dev.drugowick.threehundredsixty.controller.BaseController;
 import dev.drugowick.threehundredsixty.domain.entity.Employee;
 import dev.drugowick.threehundredsixty.domain.repository.EmployeeRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +20,9 @@ import java.util.Optional;
 public class EmployeeController extends BaseController {
 
     private final EmployeeRepository employeeRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public EmployeeController(EmployeeRepository employeeRepository, BCryptPasswordEncoder passwordEncoder) {
+    public EmployeeController(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
         this.passwordEncoder = passwordEncoder;
     }
