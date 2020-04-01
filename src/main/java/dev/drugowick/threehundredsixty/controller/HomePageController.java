@@ -1,6 +1,7 @@
 package dev.drugowick.threehundredsixty.controller;
 
 import dev.drugowick.threehundredsixty.domain.entity.Feedback;
+import dev.drugowick.threehundredsixty.domain.entity.FeedbackState;
 import dev.drugowick.threehundredsixty.domain.repository.FeedbackRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,7 @@ public class HomePageController extends BaseController {
     @GetMapping
     public String homePage(Principal principal, Model model) {
         String username = principal.getName();
-        List<Feedback> feedbacks = feedbackRepository.findAllByEvaluatorEmail(username);
+        List<Feedback> feedbacks = feedbackRepository.findAllByEvaluatorEmailAndStateNot(username, FeedbackState.NOT_PROCESSED);
         model.addAttribute("feedbacks", feedbacks);
         model.addAttribute("feedbackCount", feedbacks.size());
         return "index";

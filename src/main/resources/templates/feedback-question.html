@@ -6,13 +6,12 @@
     <meta charset="UTF-8">
     <title>Question</title>
 </head>
-<body>
-
+<body><div id="page">
 <div th:replace="fragments/header :: header (${username}, ${admin})"></div>
 <br>
 <div th:replace="fragments/admin-page-title :: admin-page-title (${question.getEvaluated().getName()} + ' (' + ${question.getEvaluated().getPosition()} + ')')"></div>
 <br><hr>
-<div class="container-fluid" id="page">
+<div class="container-fluid">
     <form th:object="${question}" th:method="post">
         <input type="hidden" name="id" th:value="*{id}" />
         <br>
@@ -86,6 +85,13 @@
     <br><hr><br>
 </div>
 
+
+<div v-if="showLoadingLayer" id="loadingLayer">
+    <div th:replace="fragments/loading-layer :: loading-layer"></div>
+</div>
+
+</div>
+
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <script src="/webjars/vue/2.6.11/vue.js"></script>
@@ -96,6 +102,7 @@
         el: '#page',
         data() {
             return {
+                showLoadingLayer: true,
                 showImprovement: false,
                 selectionText: '',
                 ok: false,
@@ -110,9 +117,11 @@
             else if (evaluationText === 'Atende parcialmente') this.setupPartialOk();
             else if (evaluationText === 'Não atende') this.setupNok();
             else if (evaluationText === 'Excede expectativas') this.setupGodMode();
+            this.showLoadingLayer = false;
         },
         methods: {
             buttonClicked: function (event) {
+                this.showLoadingLayer = true;
                 this.godMode = false;
                 this.ok = false;
                 this.nok = false;
@@ -123,6 +132,7 @@
                 else if (event.target.id === 'partialOk') this.setupPartialOk();
                 else if (event.target.id === 'nok') this.setupNok();
                 else if (event.target.id === 'godMode') this.setupGodMode();
+                this.showLoadingLayer = false;
             },
             setupOk: function () {
                 this.$refs.ok.click();
