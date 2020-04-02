@@ -20,7 +20,7 @@
             <select th:field="*{evaluatorUsername}" class="form-control col-sm-8" id="evaluator" placeholder="Avaliador" type="text">
                 <option th:each="employee : ${employess}"
                         th:value="${employee.getEmail()}"
-                        th:text="${employee.getEmail()}">BrunoMuniz</option>
+                        th:text="${employee.toString()}">BrunoMuniz</option>
             </select>
         </div>
         <div class="form-group row">
@@ -28,7 +28,7 @@
             <select th:field="*{evaluatedUsername}" class="form-control col-sm-8" id="evaluated" placeholder="Avaliado" type="text">
                 <option th:each="employee : ${employess}"
                         th:value="${employee.getEmail()}"
-                        th:text="${employee.getName()}">Bruno Muniz</option>
+                        th:text="${employee.toString()}">Bruno Muniz</option>
             </select>
         </div>
 

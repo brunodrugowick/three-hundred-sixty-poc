@@ -9,11 +9,11 @@ import dev.drugowick.threehundredsixty.domain.repository.BaseQuestionRepository;
 import dev.drugowick.threehundredsixty.domain.repository.EmployeeRepository;
 import dev.drugowick.threehundredsixty.domain.repository.FeedbackRepository;
 import dev.drugowick.threehundredsixty.domain.repository.QuestionRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -86,6 +86,15 @@ public class FeedbackAdminController extends BaseController {
             feedback.setState(FeedbackState.NOT_STARTED);
             feedbackRepository.save(feedback);
         });
+        return "redirect:/admin/feedbacks";
+    }
+
+    @Transactional
+    @RequestMapping(method = RequestMethod.POST)
+    public String delete(FeedbackInput feedbackInput) {
+        feedbackRepository.deleteFeedbackByEvaluatorEmailAndEvaluatedEmail(
+                feedbackInput.getEvaluatorUsername(),
+                feedbackInput.getEvaluatedUsername());
         return "redirect:/admin/feedbacks";
     }
 }

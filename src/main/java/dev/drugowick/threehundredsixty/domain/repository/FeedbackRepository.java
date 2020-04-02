@@ -14,4 +14,5 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Feedback.Key
     Optional<Feedback> findByEvaluatedIdAndEvaluatorEmail(Long evaluatedId, String evaluator);
     Optional<Feedback> findByEvaluatorIdAndEvaluatedId(Long evaluatorId, Long evaluatedId);
 
+    void deleteFeedbackByEvaluatorEmailAndEvaluatedEmail(String evaluatorEmail, String evaluatedEmail);
 }

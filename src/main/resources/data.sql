@@ -1,6 +1,6 @@
 --- Insert base questions here.
 insert into base_question (id, position, category, description) values (
-	1, 'Analista de Sistemas', 'Entrega', 'A produtividade na realização das tarefas que estão sob sua responsabilidade, está de acordo com o esperado.');
+	1, 'Analista de Sistemas', 'Entrega', 'A produtividade na realização das tarefas que estão sob sua responsabilidade está de acordo com o esperado.');
 insert into base_question (id, position, category, description) values (
 	2, 'Analista de Sistemas', 'Relacionamento Interpessoal', 'Trata a todos com respeito, simpatia, presteza e educação, independentemente da hierarquia e do público, buscando um clima de harmonia, confiança e cooperação. ');
 insert into base_question (id, position, category, description) values (
