@@ -4,6 +4,7 @@ import dev.drugowick.threehundredsixty.controller.BaseController;
 import dev.drugowick.threehundredsixty.domain.entity.BaseQuestion;
 import dev.drugowick.threehundredsixty.domain.repository.BaseQuestionRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,6 +58,13 @@ public class QuestionController extends BaseController {
     @RequestMapping(value = "/questions/new", method = RequestMethod.POST)
     public String save(Principal principal, Model model, BaseQuestion baseQuestion) {
         baseQuestionRepository.save(baseQuestion);
+        return "redirect:/admin/questions";
+    }
+
+    @Transactional
+    @RequestMapping(value = "/questions", method = RequestMethod.POST)
+    public String delete(Long id) {
+        baseQuestionRepository.deleteById(id);
         return "redirect:/admin/questions";
     }
 }

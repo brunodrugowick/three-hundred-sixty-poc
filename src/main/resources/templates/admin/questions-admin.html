@@ -26,6 +26,7 @@
             <th scope="col">Categoria</th>
             <th scope="col">Pergunta</th>
             <th scope="col">Ações</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -34,10 +35,47 @@
             <td th:text="${question.getCategory()}"></td>
             <td th:text="${question.getDescription()}"></td>
             <td>
-                <a class="btn btn-primary"
-                   style="white-space: nowrap"
-                    th:href="'/admin/questions/' + ${question.getId()}"
-                    th:text="Editar"></a>
+                <div class="text-center">
+                    <a class="btn btn-primary"
+                       style="white-space: nowrap;"
+                       th:href="'/admin/questions/' + ${question.getId()}"
+                       th:text="Editar"></a>
+                </div>
+            </td>
+            <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-danger"
+                        data-toggle="modal" data-target="#removalModal">
+                    Remover
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="removalModal" tabindex="-1" role="dialog" aria-labelledby="removalModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="removalModalLabel">Remover</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <br>
+                            <div class="modal-body">
+                                Tem certeza que deseja remover a pergunta?
+                            </div>
+                            <div class="modal-footer">
+                                <form th:object="${question}" th:method="delete">
+                                    <input type="hidden" th:name="id" th:value="${question.getId()}">
+                                    <input type="hidden"
+                                           th:name="${_csrf.parameterName}"
+                                           th:value="${_csrf.token}"/>
+                                    <input class="btn btn-danger" type="submit"
+                                           value="Remover" />
+                                </form>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </td>
         </tr>
         </tbody>
