@@ -45,11 +45,11 @@
             <td>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-outline-danger"
-                        data-toggle="modal" data-target="#removalModal">
+                        data-toggle="modal" th:data-target="'#removalModal' + ${question.id}">
                     Remover
                 </button>
                 <!-- Modal -->
-                <div class="modal fade" id="removalModal" tabindex="-1" role="dialog" aria-labelledby="removalModalLabel" aria-hidden="true">
+                <div class="modal fade" th:id="'removalModal' + ${question.id}" tabindex="-1" role="dialog" aria-labelledby="removalModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">

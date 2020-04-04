@@ -74,47 +74,6 @@
             <td th:text="${feedback.getState().state}"></td>
             <td>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-danger" data-toggle="modal" th:data-target="'#removalModal' + ${feedback.getKey().getEvaluatorId()} + ${feedback.getKey().getEvaluatedId()}">
-                    Remover
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" th:id="'removalModal' + ${feedback.getKey().getEvaluatorId()} + ${feedback.getKey().getEvaluatedId()}" tabindex="-1" role="dialog" aria-labelledby="removalModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="removalModalLabel">Remover avaliação</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <br>
-                            <div class="modal-body">
-                                Tem certeza que deseja remover a avaliação?
-                                <br><br>
-                                <h5><div class="badge badge-pill text-monospace" style="background-color: antiquewhite">
-                                    <span th:text="${feedback.getEvaluator().getName()}">Bruno Muniz [Coordenador]</span> ->
-                                    <span th:text="${feedback.getEvaluated().getName()}">Heitor Matsui [Coordenador]</span>
-                                </div></h5>
-                            </div>
-                            <div class="modal-footer">
-                                <form th:object="${feedback}" th:method="delete">
-                                    <input type="hidden" th:name="evaluatorUsername" th:value="${feedback.getEvaluator().getEmail()}">
-                                    <input type="hidden" th:name="evaluatedUsername" th:value="${feedback.getEvaluated().getEmail()}">
-                                    <input type="hidden"
-                                           th:name="${_csrf.parameterName}"
-                                           th:value="${_csrf.token}"/>
-                                    <input class="btn btn-danger" type="submit"
-                                           value="Remover" />
-                                </form>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <!-- Button trigger modal -->
                 <button type="button" class="btn btn-outline-warning" data-toggle="modal" th:data-target="'#reprocessOneModal' + ${feedback.getKey().getEvaluatorId()} + ${feedback.getKey().getEvaluatedId()}">
                     Reprocessar
                 </button>
@@ -147,6 +106,47 @@
                                            th:value="${_csrf.token}"/>
                                     <input class="btn btn-warning" type="submit"
                                            value="Reprocessar" />
+                                </form>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal" th:data-target="'#removalModal' + ${feedback.getKey().getEvaluatorId()} + ${feedback.getKey().getEvaluatedId()}">
+                    Remover
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" th:id="'removalModal' + ${feedback.getKey().getEvaluatorId()} + ${feedback.getKey().getEvaluatedId()}" tabindex="-1" role="dialog" aria-labelledby="removalModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="removalModalLabel">Remover avaliação</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <br>
+                            <div class="modal-body">
+                                Tem certeza que deseja remover a avaliação?
+                                <br><br>
+                                <h5><div class="badge badge-pill text-monospace" style="background-color: antiquewhite">
+                                    <span th:text="${feedback.getEvaluator().getName()}">Bruno Muniz [Coordenador]</span> ->
+                                    <span th:text="${feedback.getEvaluated().getName()}">Heitor Matsui [Coordenador]</span>
+                                </div></h5>
+                            </div>
+                            <div class="modal-footer">
+                                <form th:object="${feedback}" th:method="delete">
+                                    <input type="hidden" th:name="evaluatorUsername" th:value="${feedback.getEvaluator().getEmail()}">
+                                    <input type="hidden" th:name="evaluatedUsername" th:value="${feedback.getEvaluated().getEmail()}">
+                                    <input type="hidden"
+                                           th:name="${_csrf.parameterName}"
+                                           th:value="${_csrf.token}"/>
+                                    <input class="btn btn-danger" type="submit"
+                                           value="Remover" />
                                 </form>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
