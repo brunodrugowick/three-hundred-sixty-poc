@@ -3,9 +3,9 @@ package dev.drugowick.threehundredsixty.controller.admin;
 import dev.drugowick.threehundredsixty.controller.BaseController;
 import dev.drugowick.threehundredsixty.domain.entity.Employee;
 import dev.drugowick.threehundredsixty.domain.repository.EmployeeRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,6 +63,16 @@ public class EmployeeController extends BaseController {
     public String save(Principal principal, Model model, Employee employee) {
         employee.setPassword(passwordEncoder.encode("password"));
         employeeRepository.save(employee);
+        return "redirect:/admin/employees";
+    }
+
+    @Transactional
+    @RequestMapping(value = "/employees", method = RequestMethod.POST)
+    public String toggleActive(Long id) {
+        employeeRepository.findById(id).ifPresent(employee -> {
+            if (employee.isEnabled()) employee.setEnabled(false);
+            else employee.setEnabled(true);
+        });
         return "redirect:/admin/employees";
     }
 }
