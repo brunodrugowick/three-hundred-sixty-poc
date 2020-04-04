@@ -9,11 +9,12 @@ import dev.drugowick.threehundredsixty.domain.repository.BaseQuestionRepository;
 import dev.drugowick.threehundredsixty.domain.repository.EmployeeRepository;
 import dev.drugowick.threehundredsixty.domain.repository.FeedbackRepository;
 import dev.drugowick.threehundredsixty.domain.repository.QuestionRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
 
@@ -42,7 +43,7 @@ public class FeedbackAdminController extends BaseController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newFeedback(Principal principal, Model model) {
         model.addAttribute("feedback", new FeedbackInput());
-        model.addAttribute("employess", employeeRepository.findAll());
+        model.addAttribute("employees", employeeRepository.findAll());
         return "admin/feedback-new";
     }
 
@@ -55,6 +56,38 @@ public class FeedbackAdminController extends BaseController {
                 .ifPresent(feedback::setEvaluated);
         feedback.setState(FeedbackState.NOT_PROCESSED);
         //TODO Move this mess to a service class.
+        generateFeedbackQuestions(feedback);
+        return "redirect:/admin/feedbacks";
+    }
+
+    @Transactional
+    @RequestMapping(value = "/processAll", method = RequestMethod.POST)
+    public String processAll() {
+        //TODO Shame on me... again, create a proper service class.
+        questionRepository.deleteAll();
+        feedbackRepository.findAll().forEach(this::generateFeedbackQuestions);
+        return "redirect:/admin/feedbacks";
+    }
+
+    @Transactional
+    @RequestMapping(value = "/processOne", method = RequestMethod.POST)
+    public String processOne(FeedbackInput feedbackInput) {
+        //TODO Shame on me... again, create a proper service class.
+        feedbackRepository.findByEvaluatorEmailAndEvaluatedEmail(
+            feedbackInput.getEvaluatorUsername(),
+            feedbackInput.getEvaluatedUsername()
+        ).ifPresent(feedback -> {
+            questionRepository.deleteAllByEvaluatorEmailAndEvaluatedEmail(
+                    feedback.getEvaluator().getEmail(),
+                    feedback.getEvaluated().getEmail()
+            );
+            generateFeedbackQuestions(feedback);
+        });
+
+        return "redirect:/admin/feedbacks";
+    }
+
+    private void generateFeedbackQuestions(Feedback feedback) {
         baseQuestionRepository.findAllByPosition(feedback.getEvaluated().getPosition()).forEach(baseQuestion -> {
             Question question = new Question(
                     baseQuestion.getPosition(),
@@ -66,27 +99,6 @@ public class FeedbackAdminController extends BaseController {
         });
         feedback.setState(FeedbackState.NOT_STARTED);
         feedbackRepository.save(feedback);
-        return "redirect:/admin/feedbacks";
-    }
-
-    @RequestMapping(value = "/processAll", method = RequestMethod.POST)
-    public String processAll() {
-        //TODO Shame on me... again, create a proper service class.
-        questionRepository.deleteAll();
-        feedbackRepository.findAll().forEach(feedback -> {
-            baseQuestionRepository.findAllByPosition(feedback.getEvaluated().getPosition()).forEach(baseQuestion -> {
-                Question question = new Question(
-                        baseQuestion.getPosition(),
-                        baseQuestion.getCategory(),
-                        baseQuestion.getDescription(),
-                        feedback.getEvaluated(),
-                        feedback.getEvaluator());
-                questionRepository.save(question);
-            });
-            feedback.setState(FeedbackState.NOT_STARTED);
-            feedbackRepository.save(feedback);
-        });
-        return "redirect:/admin/feedbacks";
     }
 
     @Transactional

@@ -18,7 +18,7 @@
         <div class="form-group row">
             <label for="evaluator" class="col-sm-4 col-form-label">Avaliador</label>
             <select th:field="*{evaluatorUsername}" class="form-control col-sm-8" id="evaluator" placeholder="Avaliador" type="text">
-                <option th:each="employee : ${employess}"
+                <option th:each="employee : ${employees}"
                         th:value="${employee.getEmail()}"
                         th:text="${employee.toString()}">BrunoMuniz</option>
             </select>
@@ -26,7 +26,7 @@
         <div class="form-group row">
             <label for="evaluated" class="col col-sm-4">Avaliado</label>
             <select th:field="*{evaluatedUsername}" class="form-control col-sm-8" id="evaluated" placeholder="Avaliado" type="text">
-                <option th:each="employee : ${employess}"
+                <option th:each="employee : ${employees}"
                         th:value="${employee.getEmail()}"
                         th:text="${employee.toString()}">Bruno Muniz</option>
             </select>
