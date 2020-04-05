@@ -3,7 +3,7 @@
 
 <body th:fragment="header (username, admin)">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" th:fragment="header">
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" th:fragment="header">
     <span class="navbar-brand mb-0 h1">
         <img src="/webjars/font-awesome/5.12.0/svgs/solid/bell.svg" width="30" height="30" class="d-inline-block align-top" alt="">
         Feedback Center</span>
@@ -13,7 +13,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
                 <a class="nav-link" href="/">Início</a>
             </li>
@@ -36,16 +36,14 @@
 <!--        </form>-->
             <div>
                 <span th:text="${username}"></span>
-            </div>
-            <div th:if="${admin}" class="-caret-left">
-                <span class="container">
+                <span th:if="${admin}" class="-caret-left">
                     <img src="/webjars/font-awesome/5.12.0/svgs/solid/flag.svg" width="15" height="15"
                          class="d-inline-block align-middle"
                          title="Você é um administrador.">
                 </span>
             </div>
 
-            <div class="text-light">
+            <div>
                 <form action="/logout"
                       method="post">
                     <input class="btn btn-link" type="submit"

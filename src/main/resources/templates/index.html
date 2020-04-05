@@ -45,7 +45,11 @@
                                    style="white-space: nowrap"
                                    th:href="${'/feedback/' + feedback.getKey().getEvaluatedId()}"
                                    th:text="${feedback.getState().state}"></a>
-                                <a th:if="${!feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-primary"
+                                <a th:if="${!feedback.getState().toString().equals('NOT_STARTED') and !feedback.getState().toString().equals('FINISHED')}" class="btn btn-primary"
+                                   style="white-space: nowrap"
+                                   th:href="${'/feedback/' + feedback.getKey().getEvaluatedId()}"
+                                   th:text="${feedback.getState().state}"></a>
+                                <a th:if="${feedback.getState().toString().equals('FINISHED')}" class="btn btn-secondary"
                                    style="white-space: nowrap"
                                    th:href="${'/feedback/' + feedback.getKey().getEvaluatedId()}"
                                    th:text="${feedback.getState().state}"></a>

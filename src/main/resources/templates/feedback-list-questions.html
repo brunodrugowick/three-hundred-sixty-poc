@@ -27,13 +27,48 @@
             <td th:text="${question.title}">Entrega</td>
             <td th:text="${question.description}">Se ele entrega</td>
             <td>
-                <a th:if="${question.getEvaluation() != null}" class="btn btn-primary" style="white-space: nowrap"
+                <a th:if="${question.getEvaluation() == 'Não atende' or question.getEvaluation() == 'Atende parcialmente'}" class="btn btn-secondary" style="white-space: nowrap"
+                   th:href="'/feedback/' + ${question.getEvaluated().getId() + '/question/' + question.getId()}"
+                   th:text="${question.getEvaluation()}"></a>
+                <a th:if="${question.getEvaluation() == 'Atende' or question.getEvaluation() == 'Excede expectativas'}" class="btn btn-primary" style="white-space: nowrap"
                    th:href="'/feedback/' + ${question.getEvaluated().getId() + '/question/' + question.getId()}"
                    th:text="${question.getEvaluation()}"></a>
                 <a th:if="${question.getEvaluation() == null}" class="btn btn-outline-primary" style="white-space: nowrap"
                    th:href="'/feedback/' + ${question.getEvaluated().getId() + '/question/' + question.getId()}"
                    th:text="Avaliar"></a>
             </td>
+            <!-- The code below is experimental and it is not working! -->
+<!--            <td>-->
+<!--                <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons">-->
+<!--                    <label th:if="${question.getEvaluation().equals('Não atende')}" for="nok" class="btn btn-primary">-->
+<!--                        <input id="nok" type="radio"/>-->
+<!--                    </label>-->
+<!--                    <label th:unless="${question.getEvaluation().equals('Não atende')}" for="nok" class="btn btn-outline-primary">-->
+<!--                        <input id="nok" type="radio"/>-->
+<!--                    </label>-->
+
+<!--                    <label th:if="${question.getEvaluation().equals('Atende parcialmente')}" for="partialOk" class="btn btn-primary">-->
+<!--                        <input id="partialOk" type="radio"/>-->
+<!--                    </label>-->
+<!--                    <label th:unless="${question.getEvaluation().equals('Atende parcialmente')}" for="partialOk" class="btn btn-outline-primary">-->
+<!--                        <input id="partialOk" type="radio"/>-->
+<!--                    </label>-->
+
+<!--                    <label th:if="${question.getEvaluation().equals('Atende')}" for="ok" class="btn btn-primary">-->
+<!--                        <input id="ok" type="radio" />-->
+<!--                    </label>-->
+<!--                    <label th:unless="${question.getEvaluation().equals('Atende')}" for="ok" class="btn btn-outline-primary">-->
+<!--                        <input id="ok" type="radio" />-->
+<!--                    </label>-->
+
+<!--                    <label th:if="${question.getEvaluation().equals('Excede expectativas')}" for="godMode" class="btn btn-primary">-->
+<!--                        <input id="godMode" type="radio" />-->
+<!--                    </label>-->
+<!--                    <label th:unless="${question.getEvaluation().equals('Excede expectativas')}" for="godMode" class="btn btn-outline-primary">-->
+<!--                        <input id="godMode" type="radio" />-->
+<!--                    </label>-->
+<!--                </div>-->
+<!--            </td>-->
         </tr>
         </tbody>
     </table>
