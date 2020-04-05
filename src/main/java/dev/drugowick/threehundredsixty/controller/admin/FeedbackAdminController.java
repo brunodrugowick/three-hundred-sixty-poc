@@ -55,6 +55,7 @@ public class FeedbackAdminController extends BaseController {
         employeeRepository.findByEmail(feedbackInput.getEvaluatedUsername())
                 .ifPresent(feedback::setEvaluated);
         feedback.setState(FeedbackState.NOT_PROCESSED);
+        feedback.setRelationship(feedbackInput.getRelationship());
         //TODO Move this mess to a service class.
         generateFeedbackQuestions(feedback);
         return "redirect:/admin/feedbacks";

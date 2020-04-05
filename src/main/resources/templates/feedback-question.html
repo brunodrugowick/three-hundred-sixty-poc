@@ -10,6 +10,14 @@
 <div th:replace="fragments/header :: header (${username}, ${admin})"></div>
 <br>
 <div th:replace="fragments/admin-page-title :: admin-page-title (${question.getEvaluated().getName()} + ' (' + ${question.getEvaluated().getPosition()} + ')')"></div>
+
+<div class="container-fluid text-left">
+    <h6>Você avalia como
+        <span class="badge badge-pill text-monospace"
+              style="background-color: antiquewhite" th:text="${feedback.getRelationship().relationship}">Par</span>
+    </h6>
+</div>
+
 <br><hr>
 <div class="container-fluid">
     <form th:object="${question}" th:method="post">

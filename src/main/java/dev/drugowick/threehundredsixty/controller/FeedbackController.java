@@ -8,10 +8,7 @@ import dev.drugowick.threehundredsixty.domain.repository.QuestionRepository;
 import dev.drugowick.threehundredsixty.dto.AnswerDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -28,6 +25,12 @@ public class FeedbackController extends BaseController {
     public FeedbackController(QuestionRepository questionRepository, FeedbackRepository feedbackRepository) {
         this.questionRepository = questionRepository;
         this.feedbackRepository = feedbackRepository;
+    }
+
+    @ModelAttribute("feedback")
+    public Feedback feedback(Principal principal, Model model, @PathVariable Long evaluatedId) {
+        Optional<Feedback> optionalFeedback = feedbackRepository.findByEvaluatedIdAndEvaluatorEmail(evaluatedId, principal.getName());
+        return optionalFeedback.orElseGet(Feedback::new);
     }
 
     @GetMapping

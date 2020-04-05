@@ -47,6 +47,7 @@ insert into employee (id, name, position, email, password, roles, enabled) value
 
 -- Finally, insert the mapping between user and employees to create a feedback for the user to fill
 -- this here is the reason users and employees do not have auto-generated ids. For now.
-insert into feedback (evaluator_id, evaluated_id, state) values
-    (1, 2, 'NOT_STARTED'), (1, 3, 'NOT_STARTED'), (1, 4, 'NOT_STARTED'), (2, 1, 'NOT_STARTED'),
-    (2, 3, 'NOT_STARTED'), (2, 4, 'NOT_STARTED');
+insert into feedback (evaluator_id, relationship, evaluated_id, state) values
+    (1, 'PEER', 2, 'NOT_STARTED'), (1, 'SUPERIOR', 3, 'NOT_STARTED'),
+    (1, 'SUPERIOR', 4, 'NOT_STARTED'), (2, 'PEER', 1, 'NOT_STARTED'),
+    (2, 'SUPERIOR', 3, 'NOT_STARTED'), (2, 'SUPERIOR', 4, 'NOT_STARTED');

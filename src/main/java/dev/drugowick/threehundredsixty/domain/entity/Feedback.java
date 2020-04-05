@@ -21,6 +21,9 @@ public class Feedback {
     @MapsId("evaluatorId")
     private Employee evaluator;
 
+    @Enumerated(value = EnumType.STRING)
+    private FeedbackRelationship relationship = FeedbackRelationship.PEER;
+
     @ManyToOne
     @MapsId("evaluatedId")
     private Employee evaluated;

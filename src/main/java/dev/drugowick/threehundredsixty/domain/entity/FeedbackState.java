@@ -7,6 +7,7 @@ public enum FeedbackState {
     FINISHED("Finalizada");
 
     public String state;
+
     FeedbackState(String state) {
         this.state = state;
     }

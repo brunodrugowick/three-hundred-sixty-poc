@@ -24,6 +24,15 @@
             </select>
         </div>
         <div class="form-group row">
+            <label for="relationship" class="col-sm-4 col-form-label">Relação (avalia como)</label>
+            <select th:field="*{relationship}" class="form-control col-sm-8" id="relationship" placeholder="Relação" type="text">
+                <option th:value="SUBORDINATE">Subordinado</option>
+                <option th:value="PEER">Par</option>
+                <option th:value="SUPERIOR">Superior</option>
+                <option th:value="SELF">Auto</option>
+            </select>
+        </div>
+        <div class="form-group row">
             <label for="evaluated" class="col col-sm-4">Avaliado</label>
             <select th:field="*{evaluatedUsername}" class="form-control col-sm-8" id="evaluated" placeholder="Avaliado" type="text">
                 <option th:each="employee : ${employees}"

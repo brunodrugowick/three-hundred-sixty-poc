@@ -61,6 +61,7 @@
         <thead>
         <tr class="text-left">
             <th scope="col">Avaliador</th>
+            <th scope="col">Avalia como</th>
             <th scope="col">Avaliado</th>
             <th scope="col">Situação</th>
             <th scope="col">Ações</th>
@@ -70,6 +71,7 @@
         <tbody>
         <tr class="text-left" th:each="feedback : ${feedbacks}">
             <td th:text="${feedback.getEvaluator().toString()}"></td>
+            <td th:text="${feedback.getRelationship().relationship}"></td>
             <td th:text="${feedback.getEvaluated().toString()}"></td>
             <td th:text="${feedback.getState().state}"></td>
             <td>
@@ -133,10 +135,10 @@
                             <div class="modal-body">
                                 Tem certeza que deseja remover a avaliação?
                                 <br><br>
-                                <h5><div class="badge badge-pill text-monospace" style="background-color: antiquewhite">
+                                <h5><span class="badge badge-pill text-monospace" style="background-color: antiquewhite">
                                     <span th:text="${feedback.getEvaluator().getName()}">Bruno Muniz [Coordenador]</span> ->
                                     <span th:text="${feedback.getEvaluated().getName()}">Heitor Matsui [Coordenador]</span>
-                                </div></h5>
+                                </span></h5>
                             </div>
                             <div class="modal-footer">
                                 <form th:object="${feedback}" th:method="delete">

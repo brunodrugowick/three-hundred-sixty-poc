@@ -1,5 +1,6 @@
 package dev.drugowick.threehundredsixty.controller.util;
 
+import dev.drugowick.threehundredsixty.domain.entity.FeedbackRelationship;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,5 +9,6 @@ import lombok.Setter;
 public class FeedbackInput {
 
     private String evaluatorUsername;
+    private FeedbackRelationship relationship;
     private String evaluatedUsername;
 }
