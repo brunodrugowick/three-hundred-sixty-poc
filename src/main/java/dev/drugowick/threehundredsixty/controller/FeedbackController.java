@@ -67,6 +67,8 @@ public class FeedbackController extends BaseController {
                                @Valid AnswerDto answerDto) {
 
         Question question = questionRepository.getOne(questionId);
+        // TODO DTO transformation and Service stuff happening on the controller.
+        //  Should implement a proper mapping and analyze the need and architect a service layer.
         question.setTitle(answerDto.getTitle());
         question.setDescription(answerDto.getDescription());
         question.setEvaluation(answerDto.getEvaluation());
@@ -75,8 +77,17 @@ public class FeedbackController extends BaseController {
         questionRepository.save(question);
 
         Optional<Feedback> optionalFeedback = feedbackRepository.findByEvaluatedIdAndEvaluatorEmail(evaluatedId, principal.getName());
-        optionalFeedback.ifPresent(feedback -> feedback.setState(FeedbackState.STARTED));
-        optionalFeedback.ifPresent((feedback -> feedbackRepository.save(feedback)));
+        optionalFeedback.ifPresent(feedback -> {
+            feedback.setState(FeedbackState.STARTED);
+            List<Question> feedbackQuestions = questionRepository.findAllByEvaluatorEmailAndEvaluatedId(principal.getName(), evaluatedId);
+            //TODO implement verification if feedback is finished.
+            if (feedbackQuestions
+                    .stream().parallel()
+                    .noneMatch(question1 -> question1.getEvaluation() == null || question1.getEvaluation().equals(""))) {
+                feedback.setState(FeedbackState.FINISHED);
+            }
+            feedbackRepository.save(feedback);
+        });
 
         return "redirect:/feedback/" + evaluatedId;
     }

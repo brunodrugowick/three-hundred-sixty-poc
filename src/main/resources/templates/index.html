@@ -17,34 +17,47 @@
     <div class="container-fluid text-left">
         <div class="card shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">Você tem avaliações formais disponíveis!</h5>
+                <button class="close" data-toggle="collapse" data-target="#collapseFeedbacks" role="button" aria-expanded="true" aria-controls="collapseFeedback">
+                    <span aria-hidden="true">&blacktriangledown;</span>
+                </button>
+                <h5 class="card-title" style="cursor: pointer;"
+                    data-toggle="collapse" data-target="#collapseFeedbacks" role="heading" aria-expanded="true" aria-controls="collapseFeedback"> Você tem avaliações formais disponíveis!
+                    <span class="badge badge-pill badge-primary" th:text="${feedbackCount}">9</span>
+                    <span class="sr-only">unread messages</span>
+                </h5>
+                <div class="collapse show" id="collapseFeedbacks">
                 <p class="card-text">Organize-se para responder as avaliações a seguir. Sua opinião é muito importante, portanto, seja claro e objetivo em suas respostas.
                     Traga exemplos, sempre que possivel, e pontos de melhoria quando julgar que uma melhora é necessária.<br>
-                <table class="table table-striped">
-                    <thead>
-                    <tr class="text-left">
-                        <th scope="col">Funcionário</th>
-                        <th scope="col">Cargo</th>
-                        <th scope="col">Avaliação</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="text-left" th:each="feedback : ${feedbacks}">
-                        <td th:text="${feedback.getEvaluated().getName()}"></td>
-                        <td th:text="${feedback.getEvaluated().getPosition()}"></td>
-                        <td>
-                            <a th:if="${feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-outline-primary"
-                               style="white-space: nowrap"
-                               th:href="${'/feedback/' + feedback.getKey().getEvaluatedId()}"
-                               th:text="${feedback.getState().state}"></a>
-                            <a th:if="${!feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-primary"
-                               style="white-space: nowrap"
-                               th:href="${'/feedback/' + feedback.getKey().getEvaluatedId()}"
-                               th:text="${feedback.getState().state}"></a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr class="text-left">
+                            <th scope="col">Funcionário</th>
+                            <th scope="col">Cargo</th>
+                            <th scope="col">Avaliação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="text-left" th:each="feedback : ${feedbacks}">
+                            <td th:text="${feedback.getEvaluated().getName()}"></td>
+                            <td th:text="${feedback.getEvaluated().getPosition()}"></td>
+                            <td>
+                                <a th:if="${feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-outline-primary"
+                                   style="white-space: nowrap"
+                                   th:href="${'/feedback/' + feedback.getKey().getEvaluatedId()}"
+                                   th:text="${feedback.getState().state}"></a>
+                                <a th:if="${!feedback.getState().toString().equals('NOT_STARTED') and !feedback.getState().toString().equals('FINISHED')}" class="btn btn-primary"
+                                   style="white-space: nowrap"
+                                   th:href="${'/feedback/' + feedback.getKey().getEvaluatedId()}"
+                                   th:text="${feedback.getState().state}"></a>
+                                <a th:if="${feedback.getState().toString().equals('FINISHED')}" class="btn btn-secondary"
+                                   style="white-space: nowrap"
+                                   th:href="${'/feedback/' + feedback.getKey().getEvaluatedId()}"
+                                   th:text="${feedback.getState().state}"></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -57,7 +70,7 @@
             <div class="card-body">
                 <h5 class="card-title">Feedback Espontâneo</h5>
                 <p class="card-text">Quer reforçar um comportamento positivo, parabenizar uma entrega ou sugerir uma melhoria? Este é o lugar!</p>
-                <a class="btn btn-primary" href="#">Dê um Feedback Espontâneo</a>
+                <a class="btn btn-primary disabled" href="#">Dê um Feedback Espontâneo</a>
             </div>
         </div>
     </div>

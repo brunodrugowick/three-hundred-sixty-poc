@@ -7,6 +7,7 @@ import dev.drugowick.threehundredsixty.domain.repository.BaseQuestionRepository;
 import dev.drugowick.threehundredsixty.domain.repository.FeedbackRepository;
 import dev.drugowick.threehundredsixty.domain.repository.QuestionRepository;
 import dev.drugowick.threehundredsixty.domain.repository.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ import java.util.Optional;
  * of questions for each registered feedback (a pair user/employee).
  */
 @Component
+@Slf4j
 public class BootstrapData implements CommandLineRunner {
 
     private BaseQuestionRepository baseQuestionRepository;
@@ -77,6 +79,8 @@ public class BootstrapData implements CommandLineRunner {
             admin.setRoles("ROLE_USER,ROLE_ADMIN");
             admin.setPassword(passwordEncoder.encode("password").toString());
             userRepository.save(admin);
+
+            log.info("No user found. Created 'admin' with password 'password'.");
         }
     }
 }

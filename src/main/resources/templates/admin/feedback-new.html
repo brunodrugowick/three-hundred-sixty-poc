@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href='/webjars/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+    <link href="/webjars/font-awesome/5.12.0/css/fontawesome.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Avaliação</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header (${username}, ${admin})"></div>
+<br>
+<div th:replace="fragments/admin-page-title :: admin-page-title (${feedback.getEvaluatorUsername() == null ? 'Criar Feedback' : 'Editar Feedback'})"></div>
+<br><hr>
+<div class="container" id="page">
+    <form th:object="${feedback}" th:method="post">
+        <br>
+        <div class="form-group row">
+            <label for="evaluator" class="col-sm-4 col-form-label">Avaliador</label>
+            <select th:field="*{evaluatorUsername}" class="form-control col-sm-8" id="evaluator" placeholder="Avaliador" type="text">
+                <option th:each="employee : ${employees}"
+                        th:value="${employee.getEmail()}"
+                        th:text="${employee.toString()}">BrunoMuniz</option>
+            </select>
+        </div>
+        <div class="form-group row">
+            <label for="evaluated" class="col col-sm-4">Avaliado</label>
+            <select th:field="*{evaluatedUsername}" class="form-control col-sm-8" id="evaluated" placeholder="Avaliado" type="text">
+                <option th:each="employee : ${employees}"
+                        th:value="${employee.getEmail()}"
+                        th:text="${employee.toString()}">Bruno Muniz</option>
+            </select>
+        </div>
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+        <div class="container-fluid text-left">
+            <div class="float-md-none">
+                <button class=" btn btn-primary" type="submit">Salvar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container-fluid" id="footer">
+    <br><hr><br>
+</div>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script src="/webjars/vue/2.6.11/vue.js"></script>
+</body>
+</html>

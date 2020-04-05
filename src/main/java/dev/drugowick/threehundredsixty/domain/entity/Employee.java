@@ -30,6 +30,12 @@ public class Employee {
     @NotNull
     private boolean enabled = true;
 
-    @OneToMany(mappedBy = "evaluator", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "evaluator", cascade = CascadeType.REFRESH, orphanRemoval = true)
     private List<Feedback> feedbacks = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return name + " [" +
+                position + ']';
+    }
 }

@@ -25,6 +25,7 @@
             <th scope="col">Funcionário</th>
             <th scope="col">Cargo</th>
             <th scope="col">Ações</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -36,6 +37,84 @@
                    style="white-space: nowrap"
                     th:href="'/admin/employees/' + ${employee.getId()}"
                     th:text="Editar"></a>
+            </td>
+            <td th:if="${employee.isEnabled()}">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-warning"
+                        data-toggle="modal" th:data-target="'#removalModal' + ${employee.id}">
+                    Desativar
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" th:id="'removalModal' + ${employee.id}" tabindex="-1" role="dialog" aria-labelledby="removalModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="removalModalLabel">Desativar funcionário</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <br>
+                            <div class="modal-body">
+                                Tem certeza que deseja desativar o funcionário?
+                                <br><br>
+                                <h5><div class="badge badge-pill text-monospace" style="background-color: antiquewhite">
+                                    <span th:text="${employee}">Heitor Matsui [Coordenador]</span>
+                                </div></h5>
+                            </div>
+                            <div class="modal-footer">
+                                <form th:object="${employee}" th:method="delete">
+                                    <input type="hidden" th:name="id" th:value="${employee.getId()}">
+                                    <input type="hidden"
+                                           th:name="${_csrf.parameterName}"
+                                           th:value="${_csrf.token}"/>
+                                    <input class="btn btn-warning" type="submit"
+                                           value="Desativar" />
+                                </form>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td th:if="${!employee.isEnabled()}">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-info"
+                        data-toggle="modal" th:data-target="'#activateModal' + ${employee.id}">
+                    Ativar
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" th:id="'activateModal' + ${employee.id}" tabindex="-1" role="dialog" aria-labelledby="removalModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="activateModalLabel">Ativar funcionário</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <br>
+                            <div class="modal-body">
+                                Tem certeza que deseja ativar o funcionário?
+                                <br><br>
+                                <h5><div class="badge badge-pill text-monospace" style="background-color: antiquewhite">
+                                    <span th:text="${employee}">Heitor Matsui [Coordenador]</span>
+                                </div></h5>
+                            </div>
+                            <div class="modal-footer">
+                                <form th:object="${employee}" th:method="delete">
+                                    <input type="hidden" th:name="id" th:value="${employee.getId()}">
+                                    <input type="hidden"
+                                           th:name="${_csrf.parameterName}"
+                                           th:value="${_csrf.token}"/>
+                                    <input class="btn btn-info" type="submit"
+                                           value="Ativar" />
+                                </form>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </td>
         </tr>
         </tbody>
