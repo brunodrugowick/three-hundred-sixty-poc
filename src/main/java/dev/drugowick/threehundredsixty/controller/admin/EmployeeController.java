@@ -47,7 +47,7 @@ public class EmployeeController extends BaseController {
                           @PathVariable Long id
     ) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        optionalEmployee.ifPresent(savedEmployee -> employee.setPassword(savedEmployee.getPassword()));
+        optionalEmployee.ifPresent(savedEmployee -> employee.setPassword(passwordEncoder.encode(employee.getPassword())));
         employeeRepository.save(employee);
         return "redirect:/admin/employees";
     }
