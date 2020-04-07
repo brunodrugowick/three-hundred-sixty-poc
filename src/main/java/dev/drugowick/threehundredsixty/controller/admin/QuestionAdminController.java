@@ -16,11 +16,11 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
-public class QuestionController extends BaseController {
+public class QuestionAdminController extends BaseController {
 
     private final BaseQuestionRepository baseQuestionRepository;
 
-    public QuestionController(BaseQuestionRepository baseQuestionRepository) {
+    public QuestionAdminController(BaseQuestionRepository baseQuestionRepository) {
         this.baseQuestionRepository = baseQuestionRepository;
     }
 
