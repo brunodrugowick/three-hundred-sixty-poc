@@ -83,7 +83,8 @@
 
         <div class="container-fluid text-left">
             <div class="float-md-none">
-                <button class=" btn btn-primary" type="submit">Salvar</button>
+                <button class="btn btn-primary" type="submit">Salvar</button>
+                <a class="btn btn-secondary" th:href="'/feedback/' + ${feedback.getEvaluated().getId()}">Cancelar</a>
             </div>
         </div>
     </form>
