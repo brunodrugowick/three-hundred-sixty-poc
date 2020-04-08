@@ -10,6 +10,14 @@
 <div th:replace="fragments/header :: header (${username}, ${admin})"></div>
 <br>
 <div th:replace="fragments/admin-page-title :: admin-page-title (${question.getEvaluated().getName()} + ' (' + ${question.getEvaluated().getPosition()} + ')')"></div>
+
+<div class="container-fluid text-left">
+    <h6>Você avalia como
+        <span class="badge badge-pill text-monospace"
+              style="background-color: antiquewhite" th:text="${feedback.getRelationship().relationship}">Par</span>
+    </h6>
+</div>
+
 <br><hr>
 <div class="container-fluid">
     <form th:object="${question}" th:method="post">
@@ -60,22 +68,29 @@
         <div class="container-fluid text-left">
             <div class="form-group">
                 <label for="example">Exemplo</label>
-                <textarea th:field="*{example}" th:name="example" class="form-control" id="example" rows="1"></textarea>
+                <textarea th:field="*{example}" th:name="example" class="form-control" id="example" rows="2" maxlength="2000"></textarea>
             </div>
         </div>
 
         <div v-if="showImprovement" class="container-fluid text-left">
             <div class="form-group">
                 <label for="improvement">Sugestão de Melhoria</label>
-                <textarea th:field="*{improvement}" th:name="improvement" class="form-control" id="improvement" rows="2"></textarea>
+                <textarea th:field="*{improvement}" th:name="improvement" class="form-control" id="improvement" rows="2" maxlength="2000"></textarea>
             </div>
         </div>
 
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
+        <div th:if="${#fields.errors('*').size()}">
+            <div class="form-group alert alert-warning" th:each="err : ${#fields.errors('*')}">
+                <span th:text="${err}">Descrição de um erro</span>
+            </div>
+        </div>
+
         <div class="container-fluid text-left">
             <div class="float-md-none">
-                <button class=" btn btn-primary" type="submit">Salvar</button>
+                <button class="btn btn-primary" type="submit">Salvar</button>
+                <a class="btn btn-secondary" th:href="'/feedback/' + ${feedback.getEvaluated().getId()}">Cancelar</a>
             </div>
         </div>
     </form>

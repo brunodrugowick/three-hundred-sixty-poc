@@ -17,12 +17,12 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
-public class EmployeeController extends BaseController {
+public class EmployeeAdminController extends BaseController {
 
     private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public EmployeeController(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder) {
+    public EmployeeAdminController(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
         this.passwordEncoder = passwordEncoder;
     }

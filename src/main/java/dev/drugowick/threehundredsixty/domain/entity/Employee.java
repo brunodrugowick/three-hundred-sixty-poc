@@ -4,7 +4,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +21,24 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(min = 1, max = 120, message = "Nome deve conter no mínimo 1 e no máximo 120 caracteres")
     private String name;
+
+    @NotBlank
+    @Size(min = 1, max = 60, message = "Cargo deve conter no mínimo 1 e no máximo 60 caracteres")
     private String position;
 
     // User stuff
     @Column(nullable = false, unique = true)
+    @Email
+    @NotBlank
     private String email;
+
+    @NotBlank
+    @Size(min = 4, max = 60, message = "Senha deve conter no mínimo 4 e no máximo 60 caracteres")
     private String password;
+
     private String roles;
 
     @NotNull
