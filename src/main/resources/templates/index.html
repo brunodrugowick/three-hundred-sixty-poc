@@ -34,7 +34,7 @@
                             <th scope="col">Você avalia como</th>
                             <th scope="col">Funcionário</th>
                             <th scope="col">Cargo</th>
-                            <th scope="col">Avaliação</th>
+                            <th scope="col">Situação</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -45,8 +45,7 @@
                             <td>
                                 <a th:if="${feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-outline-primary"
                                    style="white-space: nowrap"
-                                   th:href="${'/feedback/' + feedback.getKey().getEvaluatedId()}"
-                                   th:text="${feedback.getState().state}"></a>
+                                   th:href="${'/feedback/' + feedback.getKey().getEvaluatedId()}">Iniciar agora!</a>
                                 <a th:if="${!feedback.getState().toString().equals('NOT_STARTED') and !feedback.getState().toString().equals('FINISHED')}" class="btn btn-primary"
                                    style="white-space: nowrap"
                                    th:href="${'/feedback/' + feedback.getKey().getEvaluatedId()}"

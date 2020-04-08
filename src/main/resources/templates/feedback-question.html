@@ -68,14 +68,14 @@
         <div class="container-fluid text-left">
             <div class="form-group">
                 <label for="example">Exemplo</label>
-                <textarea th:field="*{example}" th:name="example" class="form-control" id="example" rows="1"></textarea>
+                <textarea th:field="*{example}" th:name="example" class="form-control" id="example" rows="2" maxlength="2000"></textarea>
             </div>
         </div>
 
         <div v-if="showImprovement" class="container-fluid text-left">
             <div class="form-group">
                 <label for="improvement">Sugestão de Melhoria</label>
-                <textarea th:field="*{improvement}" th:name="improvement" class="form-control" id="improvement" rows="2"></textarea>
+                <textarea th:field="*{improvement}" th:name="improvement" class="form-control" id="improvement" rows="2" maxlength="2000"></textarea>
             </div>
         </div>
 

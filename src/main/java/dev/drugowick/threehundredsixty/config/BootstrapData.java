@@ -1,7 +1,6 @@
 package dev.drugowick.threehundredsixty.config;
 
 import dev.drugowick.threehundredsixty.domain.entity.BaseQuestion;
-import dev.drugowick.threehundredsixty.domain.entity.Employee;
 import dev.drugowick.threehundredsixty.domain.entity.Question;
 import dev.drugowick.threehundredsixty.domain.repository.BaseQuestionRepository;
 import dev.drugowick.threehundredsixty.domain.repository.FeedbackRepository;
@@ -12,8 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 /**
  * This class is responsible for bootstraping the data based on the provided data on a database. It will create a set
@@ -67,20 +64,5 @@ public class BootstrapData implements CommandLineRunner {
                 questionRepository.save(question);
             });
         });
-
-        Optional<Employee> employee = userRepository.findByEmail("admin");
-
-        if (!employee.isPresent()) {
-            // Create a user
-            Employee admin = new Employee();
-            admin.setName("Admin");
-            admin.setEmail("admin");
-            admin.setEnabled(true);
-            admin.setRoles("ROLE_USER,ROLE_ADMIN");
-            admin.setPassword(passwordEncoder.encode("password").toString());
-            userRepository.save(admin);
-
-            log.info("No user found. Created 'admin' with password 'password'.");
-        }
     }
 }
