@@ -105,7 +105,11 @@ public class FeedbackAdminController extends BaseController {
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public String delete(FeedbackInput feedbackInput) {
+        // TODO this should be in a service layer.
         feedbackRepository.deleteFeedbackByEvaluatorEmailAndEvaluatedEmail(
+                feedbackInput.getEvaluatorUsername(),
+                feedbackInput.getEvaluatedUsername());
+        questionRepository.deleteAllByEvaluatorEmailAndEvaluatedEmail(
                 feedbackInput.getEvaluatorUsername(),
                 feedbackInput.getEvaluatedUsername());
         return "redirect:/admin/feedbacks";
