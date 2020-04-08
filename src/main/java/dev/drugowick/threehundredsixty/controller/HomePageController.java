@@ -27,4 +27,9 @@ public class HomePageController extends BaseController {
         model.addAttribute("feedbackCount", feedbacks.size());
         return "index";
     }
+
+    @GetMapping("/admin/profile")
+    public String profilePage() {
+        return "admin/profile";
+    }
 }

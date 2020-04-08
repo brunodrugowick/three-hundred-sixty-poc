@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href='/webjars/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header (username=${username}, admin=${admin})"></div>
+<br>
+<div th:replace="fragments/admin-page-title :: admin-page-title ('Profile: ' + ${fullname})"></div>
+<br>
+
+<!--<code>[[${#httpServletRequest.requestURI}]]</code>-->
+<!--<br>-->
+<!--<code>[[${fullname}]]</code>-->
+
+<div class="container-fluid">
+    <div class="container-fluid text-left">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form>
+                    <h5 class="card-title">Alterar senha</h5>
+                    <p class="card-text">Caso deseje alterar sua senha, por favor preencha o formulário abaixo:</p>
+                    <input id="*{currPassword}" class="form-control col-sm-8" placeholder="Senha Atual" type="password"/>
+                    <input id="*{newPassword1}" class="form-control col-sm-8" placeholder="Nova senha" type="password"/>
+                    <input id="*{newPassword2}" class="form-control col-sm-8" placeholder="Nova senha (novamente)" type="password"/>
+                    <a class="btn btn-primary disabled" href="#">Alterar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" id="footer">
+    <br><br>
+</div>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

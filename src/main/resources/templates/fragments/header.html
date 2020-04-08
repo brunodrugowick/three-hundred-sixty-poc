@@ -34,8 +34,10 @@
 <!--            <input aria-label="Search" class="form-control mr-sm-2" placeholder="Search" type="search">-->
 <!--            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
 <!--        </form>-->
-            <div>
-                <span th:text="${username}"></span>
+
+<!--        th:if="${#strings.contains(#httpServletRequest.requestURI, 'profile')}" style="border-bottom-width: 4px; border-bottom-style: solid; color: #58a8ff;"-->
+            <div >
+                <a href="/admin/profile" th:text="${username}"></a>
                 <span th:if="${admin}" class="-caret-left">
                     <img src="/webjars/font-awesome/5.12.0/svgs/solid/flag.svg" width="15" height="15"
                          class="d-inline-block align-middle"
