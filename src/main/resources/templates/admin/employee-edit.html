@@ -5,8 +5,29 @@
     <link href="/webjars/font-awesome/5.12.0/css/fontawesome.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Funcionário</title>
+    <script th:inline="javascript">
+        function fill_roles_selectbox() {
+            // To set bootstrap-select values see: github.com/snapappointments/bootstrap-select/issues/540
+
+            var roles_str = /*[[ ${employee.roles} ]]*/ null;
+
+            $('.selectpicker#roles').selectpicker();
+            if (roles_str === null) {
+                $('.selectpicker#roles').selectpicker('val', []);
+            } else {
+                var roles_arr = roles_str.split(",")
+                if (roles_arr.length > 0) {
+                    $('.selectpicker#roles').selectpicker('val', roles_arr);
+                }
+            }
+        }
+
+        function init(){
+            fill_roles_selectbox();
+        }
+    </script>
 </head>
-<body>
+<body onload="init()">
 
 <div th:replace="fragments/header :: header (${username}, ${admin})"></div>
 <br>
@@ -37,8 +58,10 @@
 <!--        </div>-->
         <div class="form-group row">
             <label for="roles" class="col col-sm-4">Roles</label>
-            <input th:field="*{roles}" class="form-control col-sm-8" id="roles"
-                   placeholder="Roles" type="text" maxlength="120"/>
+            <select id="roles" th:field="*{roles}" class="selectpicker" multiple data-max-options="2">
+                <option value="ROLE_ADMIN" selected>ADMIN</option>
+                <option value="ROLE_USER" selected>USER</option>
+            </select>
         </div>
 
         <input type="hidden" name="enabled" th:value="*{enabled}" />
@@ -56,8 +79,19 @@
     <br><hr><br>
 </div>
 
-<script src="/webjars/jquery/jquery.min.js"></script>
-<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
 <script src="/webjars/vue/2.6.11/vue.js"></script>
+
+<!-- Trying to add bootstrap-select using webjars: -->
+<!--<script th:src="@{/webjars/bootstrap-select/js/bootstrap-select.min.js}"></script>-->
+<!--<script src="/webjars/bootstrap-select/1.4.2/bootstrap-select.min.js" type="script"></script>-->
+
+<!-- Using CDN is ok: -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/js/bootstrap-select.min.js" integrity="sha256-+o/X+QCcfTkES5MroTdNL5zrLNGb3i4dYdWPWuq6whY=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/css/bootstrap-select.min.css" integrity="sha256-l3FykDBm9+58ZcJJtzcFvWjBZNJO40HmvebhpHXEhC0=" crossorigin="anonymous" />
+
 </body>
 </html>

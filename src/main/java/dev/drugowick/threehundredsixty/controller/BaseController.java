@@ -30,7 +30,11 @@ public class BaseController {
     @ModelAttribute("admin")
     public boolean admin(Principal principal) {
         Optional<Employee> optionalEmployee = userRepository.findByEmail(principal.getName());
-
-        return optionalEmployee.map(employee -> employee.getRoles().contains("ROLE_ADMIN")).orElse(false);
+        return optionalEmployee.map(employee -> {
+            if (employee.getRoles() == null)
+                return false;
+            else
+                return employee.getRoles().contains("ROLE_ADMIN");
+        }).orElse(false);
     }
 }
