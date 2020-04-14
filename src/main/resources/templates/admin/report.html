@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href='/webjars/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/css/bootstrap-table.css">
+
+    <meta charset="UTF-8">
+    <title>Avaliações</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header (${username}, ${admin})"></div>
+<br>
+<div class="float-left" th:replace="fragments/admin-page-title :: admin-page-title ('Relatório de ' + ${evaluated.getName()})"></div>
+
+<div class="container-fluid text-left">
+    <h6>Avaliado como
+        <span class="badge badge-pill text-monospace"
+              style="background-color: antiquewhite" th:text="${evaluated.getPosition()}">Par</span>
+    </h6>
+</div>
+
+</div>
+<br>
+<div class="container-fluid">
+
+    <table class="table table-striped">
+        <thead>
+        <tr class="text-left">
+            <th scope="col">Avaliador</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Avaliação</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-left" th:each="question : ${questions}">
+            <!--/*@thymesVar id="employee" type="dev.drugowick.threehundredsixty.controller.admin.FeedbackReportTest.EmployeeReportListData"*/-->
+            <td th:text="${question.getEvaluator().getPosition()}"></td>
+            <td th:text="${question.getDescription()}"></td>
+            <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                        th:data-target="'#moreInfoOneModal' + ${question.getId()}" th:text="${question.getEvaluation()}">
+                    Avaliação
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" th:id="'moreInfoOneModal' + ${question.getId()}" tabindex="-1" role="dialog" aria-labelledby="reprocessOneModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="moreInfoModalLabel">
+                                    Detalhes da avaliação
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <br>
+                            <div class="modal-body">
+                                Descrição:
+                                <div class="text-monospace text-monospace" style="background-color: antiquewhite">
+                                    <span th:text="${question.getDescription()}">Descrição</span>
+                                </div>
+                                <br>
+                                Avaliação:
+                                <div class="text-monospace text-monospace" style="background-color: antiquewhite">
+                                    <span th:text="${question.getEvaluation()}">Avaliação</span>
+                                </div>
+                                <br>
+                                Exemplo:
+                                <div class="text-monospace text-monospace" style="background-color: antiquewhite">
+                                    <span th:text="${question.getExample()}">Exemplo</span>
+                                </div>
+                                <br>
+                                Sugestão de Melhoria:
+                                <div class="text-monospace text-monospace" style="background-color: antiquewhite">
+                                    <span th:text="${question.getImprovement()}">Melhoria</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container-fluid" id="footer">
+    <br><hr><br>
+</div>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-table-locale-all.min.js"></script>
+</body>
+</html>
