@@ -6,7 +6,7 @@ insert into base_question (id, position, category, description) values (
 
 -- Insert the people that are going to be evaluated.
 insert into employee (id, name, position, email, password, roles, enabled) values
-    (1, 'Heitor Marrakesh', 'Coordenador', 'heitor.marrakesh@gmail.com', '$2a$10$M7OAYIGqApcaVQ8P2Th2Wef.pt1wTYdHBRwT7Q9XE8V3BHo37bfZe', 'ROLE_USER,ROLE_ADMIN', true),
+    (1, 'Heitor Marrakesh', 'Coordenador', 'heitor.marrakesh@email.com', '$2a$10$M7OAYIGqApcaVQ8P2Th2Wef.pt1wTYdHBRwT7Q9XE8V3BHo37bfZe', 'ROLE_USER,ROLE_ADMIN', true),
     (2, 'Bruno Mahoney', 'Coordenador', 'bruno.mahoney@email.com', '$2a$10$M7OAYIGqApcaVQ8P2Th2Wef.pt1wTYdHBRwT7Q9XE8V3BHo37bfZe', 'ROLE_USER,ROLE_ADMIN', true),
     (3, 'Enrique Iglesias', 'Analista de Sistemas', 'enrique.iglesias@email.com', '$2a$10$M7OAYIGqApcaVQ8P2Th2Wef.pt1wTYdHBRwT7Q9XE8V3BHo37bfZe', 'ROLE_USER,ROLE_ADMIN', true);
 
