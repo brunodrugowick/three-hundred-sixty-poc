@@ -3,9 +3,13 @@ package dev.drugowick.threehundredsixty.controller;
 import dev.drugowick.threehundredsixty.domain.entity.Feedback;
 import dev.drugowick.threehundredsixty.domain.entity.FeedbackState;
 import dev.drugowick.threehundredsixty.domain.repository.FeedbackRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
@@ -28,8 +32,4 @@ public class HomePageController extends BaseController {
         return "index";
     }
 
-    @GetMapping("/admin/profile")
-    public String profilePage() {
-        return "admin/profile";
-    }
 }

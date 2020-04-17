@@ -84,6 +84,13 @@
             <optional>true</optional>
         </dependency>
 
+<!--        define a bridge between log4j and slf4j: https://stackoverflow.com/a/50380669/7362660 -->
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>log4j-over-slf4j</artifactId>-->
+<!--            <version>1.7.29</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

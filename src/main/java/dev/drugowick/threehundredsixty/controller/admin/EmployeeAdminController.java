@@ -75,4 +75,12 @@ public class EmployeeAdminController extends BaseController {
         });
         return "redirect:/admin/employees";
     }
+
+    @RequestMapping(value = "reset_password", method = RequestMethod.POST)
+    public String resetPassword(Principal principal, Model model) {
+        System.err.println("== principal: " + principal);
+        System.err.println("== model: " + model);
+
+        return "home";
+    }
 }

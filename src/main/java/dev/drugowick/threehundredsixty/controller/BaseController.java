@@ -18,19 +18,27 @@ public class BaseController {
 
     @ModelAttribute("username")
     public String username(Principal principal) {
-        return principal.getName();
+        return principal == null ? "" : principal.getName();
     }
 
     @ModelAttribute("fullname")
     public String fullname(Principal principal) {
-        Optional<Employee> optionalEmployee = userRepository.findByEmail(principal.getName());
-        return optionalEmployee.map(employee -> employee.getName()).orElse("");
+        if (principal == null) {
+            return "";
+        } else {
+            Optional<Employee> optionalEmployee = userRepository.findByEmail(principal.getName());
+            return optionalEmployee.map(employee -> employee.getName()).orElse("");
+        }
     }
 
     @ModelAttribute("admin")
     public boolean admin(Principal principal) {
-        Optional<Employee> optionalEmployee = userRepository.findByEmail(principal.getName());
+        if (principal == null) {
+            return false;
+        } else {
+            Optional<Employee> optionalEmployee = userRepository.findByEmail(principal.getName());
 
-        return optionalEmployee.map(employee -> employee.getRoles().contains("ROLE_ADMIN")).orElse(false);
+            return optionalEmployee.map(employee -> employee.getRoles().contains("ROLE_ADMIN")).orElse(false);
+        }
     }
 }
