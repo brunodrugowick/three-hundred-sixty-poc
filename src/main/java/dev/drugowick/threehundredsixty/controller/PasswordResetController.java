@@ -7,10 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -24,8 +24,12 @@ public class PasswordResetController {
     UserRepository userRepository;
 
     @GetMapping("/password/update")
-    public String passwordUpdate(Principal principal, Model model) {
-        return "password-update";
+    public ModelAndView passwordUpdate(ModelAndView modelAndView,
+                                       @RequestParam(defaultValue = "") String usermail) {
+        Boolean isEmailValid = isEmailValid(usermail);
+        modelAndView.getModel().put("isEmailValid", isEmailValid);
+        modelAndView.setViewName("password-update");
+        return modelAndView;
     }
 
     @GetMapping("/password/hello")
@@ -41,9 +45,9 @@ public class PasswordResetController {
             @RequestParam(defaultValue = "") String newPassword1,
             @RequestParam(defaultValue = "") String newPassword2,
             @RequestParam(defaultValue = "") String usermail) {
-        log.info("currPassword " + currPassword);
-        log.info("newPassword1 " + newPassword1);
-        log.info("newPassword2 " + newPassword2);
+        log.info("currPassword: '" + currPassword + "'");
+        log.info("newPassword1: '" + newPassword1 + "'");
+        log.info("newPassword2: '" + newPassword2 + "'");
 
         if (usermail.equals("")){
             log.info("User is blank");
@@ -66,7 +70,12 @@ public class PasswordResetController {
             log.warn("Found error before resetting password: " + problem);
         }
 
+        log.info("TODO: actually change the password now");
         return "password-update";
+    }
+
+    Boolean isEmailValid(String email) {
+        return (email != null && !email.equals(""));
     }
 
     Boolean isDataBlank(String currPassword, String newPassword1, String newPassword2, String username) {
