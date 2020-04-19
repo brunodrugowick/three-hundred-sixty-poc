@@ -1,7 +1,9 @@
 package dev.drugowick.threehundredsixty.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -57,6 +59,16 @@ public class Question {
         this.evaluated = evaluated;
         this.evaluator = evaluator;
     }
+
+    @JsonIgnore
+    @Formula("CASE" +
+            " WHEN evaluation = 'Não atende' THEN 1" +
+            " WHEN evaluation = 'Atende parcialmente' THEN 2" +
+            " WHEN evaluation = 'Atende' THEN 3" +
+            " WHEN evaluation = 'Excede expectativas' THEN 4" +
+            " ELSE 0 " +
+            "END")
+    private Integer evaluationValue;
 
     //TODO default toString methods from Lombok causes overflow
 }

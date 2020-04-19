@@ -13,44 +13,9 @@
 <br>
 <div class="float-left" th:replace="fragments/admin-page-title :: admin-page-title ('Relatórios de Avaliações')"></div>
 <div class="alert alert-warning" role="alert">
-    Esse relatório provê mínima capacidade de visualização das questões de determinado funcionário.
+    BETA: os relatórios disponibilizam apenas mínima capacidade de visualização das questões de determinado funcionário.
 </div>
 <div class="container-fluid input-group">
-<!--    <a class="btn btn-primary"-->
-<!--       style="white-space: nowrap"-->
-<!--       href="/admin/feedbacks/new">Nova Avaliação</a>-->
-<!--    <span>&nbsp;&nbsp;</span>-->
-<!--    &lt;!&ndash; Button trigger modal &ndash;&gt;-->
-<!--    <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#processModal">-->
-<!--        Reprocessar Avaliações-->
-<!--    </button>-->
-<!--    &lt;!&ndash; Modal &ndash;&gt;-->
-<!--    <div class="modal fade" id="processModal" tabindex="-1" role="dialog" aria-labelledby="processModalLabel" aria-hidden="true">-->
-<!--        <div class="modal-dialog" role="document">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h5 class="modal-title" id="processModalLabel">Reprocessar avaliações</h5>-->
-<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                        <span aria-hidden="true">&times;</span>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
-<!--                    Esta ação irá reiniciar todas as avaliações com base nas perguntas existentes.-->
-<!--                    Todas as avaliações existentes serão reiniciadas e as informações serão perdidas.-->
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <form action="/admin/feedbacks/processAll" method="post" class="form-inline">-->
-<!--                        <button class="btn btn-warning form-control my-2 my-sm-0"-->
-<!--                                type="submit"-->
-<!--                                style="white-space: nowrap"-->
-<!--                        >Reprocessar Avaliações</button>-->
-<!--                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
-<!--                    </form>-->
-<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 </div>
 <br>
 <div class="container-fluid">
@@ -60,14 +25,14 @@
         <tr class="text-left">
             <th scope="col">Funcionário</th>
             <th scope="col">Cargo</th>
-            <th scope="col">Total de Avaliações</th>
-            <th scope="col">Avaliações Finalizadas</th>
+            <th scope="col">Total de Avaliações a Receber</th>
+            <th scope="col">Avaliações Recebidas (Finalizadas)</th>
             <th scope="col">Ações</th>
         </tr>
         </thead>
         <tbody>
         <tr class="text-left" th:each="employeeFeedbacks : ${employeesFeedbacks}">
-            <!--/*@thymesVar id="employee" type="dev.drugowick.threehundredsixty.controller.admin.FeedbackReportTest.EmployeeReportListData"*/-->
+            <!--/*@thymesVar id="employee" type="dev.drugowick.threehundredsixty.controller.admin.FeedbackReportBetaController.EmployeeReportListData"*/-->
             <td th:text="${employeeFeedbacks.getEmployee().getName()}"></td>
             <td th:text="${employeeFeedbacks.getEmployee().getPosition()}"></td>
             <td th:text="${employeeFeedbacks.getNumberOfFeedbacks()}"></td>
