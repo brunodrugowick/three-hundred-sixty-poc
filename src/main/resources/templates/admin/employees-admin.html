@@ -41,7 +41,7 @@
         <tr class="text-left">
             <th scope="col" data-sortable="true">Funcionário</th>
             <th scope="col" data-sortable="true">Cargo</th>
-            <th scope="col">Editar</th>
+            <th scope="col">Ações</th>
         </tr>
         </thead>
         <tbody>
@@ -71,11 +71,13 @@
                                 </div>
                                 <br>
                                 <div class="modal-body">
-                                    Tem certeza que deseja desativar o funcionário?
+                                    O funcionário não poderá mais acessar a aplicação.
                                     <br><br>
                                     <h5><div class="badge badge-pill text-monospace" style="background-color: antiquewhite">
                                         <span th:text="${employee}">Heitor Matsui [Coordenador]</span>
                                     </div></h5>
+                                    <br>
+                                    Tem certeza que deseja desativar? 
                                 </div>
                                 <div class="modal-footer">
                                     <form th:object="${employee}" th:method="delete">
@@ -110,11 +112,13 @@
                                 </div>
                                 <br>
                                 <div class="modal-body">
-                                    Tem certeza que deseja ativar o funcionário?
+                                    O funcionário poderá acessar a aplicação.
                                     <br><br>
                                     <h5><div class="badge badge-pill text-monospace" style="background-color: antiquewhite">
                                         <span th:text="${employee}">Heitor Matsui [Coordenador]</span>
                                     </div></h5>
+                                    <br>
+                                    Tem certeza que deseja ativar?
                                 </div>
                                 <div class="modal-footer">
                                     <form th:object="${employee}" th:method="delete">
