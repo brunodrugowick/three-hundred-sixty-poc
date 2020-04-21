@@ -16,3 +16,12 @@ insert into feedback (evaluator_id, relationship, evaluated_id, state) values
     (1, 'PEER', 2, 'NOT_STARTED'), (1, 'SUPERIOR', 3, 'NOT_STARTED'),
     (2, 'PEER', 1, 'NOT_STARTED'), (2, 'SUPERIOR', 3, 'NOT_STARTED'),
     (3, 'SUBORDINATE', 1, 'NOT_STARTED'), (3, 'SUBORDINATE', 2, 'NOT_STARTED');
+
+-- Inserts the feedback questions
+INSERT INTO question (id,category,description,evaluation,example,improvement,title,evaluated_id,evaluator_id) VALUES
+    (1,'Coordenador','Se comunica com a frequência adequada com seus subordinados.',NULL,NULL,NULL,'Comunicação',2,1),
+    (2,'Analista de Sistemas','É capaz de entender seus usuários finais, mapeando suas necessidades em funcionalidades de forma satisfatória.',NULL,NULL,NULL,'Levantamento de Requisitos',3,1),
+    (3,'Coordenador','Se comunica com a frequência adequada com seus subordinados.',NULL,NULL,NULL,'Comunicação',1,2),
+    (4,'Analista de Sistemas','É capaz de entender seus usuários finais, mapeando suas necessidades em funcionalidades de forma satisfatória.',NULL,NULL,NULL,'Levantamento de Requisitos',3,2),
+    (5,'Coordenador','Se comunica com a frequência adequada com seus subordinados.',NULL,NULL,NULL,'Comunicação',1,3),
+    (6,'Coordenador','Se comunica com a frequência adequada com seus subordinados.',NULL,NULL,NULL,'Comunicação',2,3);
