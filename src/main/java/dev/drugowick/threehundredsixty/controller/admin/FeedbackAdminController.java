@@ -4,12 +4,11 @@ import dev.drugowick.threehundredsixty.controller.BaseController;
 import dev.drugowick.threehundredsixty.controller.util.FeedbackInput;
 import dev.drugowick.threehundredsixty.domain.entity.Feedback;
 import dev.drugowick.threehundredsixty.domain.entity.FeedbackState;
-import dev.drugowick.threehundredsixty.domain.entity.Question;
 import dev.drugowick.threehundredsixty.domain.repository.BaseQuestionRepository;
 import dev.drugowick.threehundredsixty.domain.repository.EmployeeRepository;
 import dev.drugowick.threehundredsixty.domain.repository.FeedbackRepository;
 import dev.drugowick.threehundredsixty.domain.repository.QuestionRepository;
-import org.springframework.dao.DataIntegrityViolationException;
+import dev.drugowick.threehundredsixty.service.FeedbackService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -29,14 +28,14 @@ public class FeedbackAdminController extends BaseController {
 
     private final FeedbackRepository feedbackRepository;
     private final EmployeeRepository employeeRepository;
-    private final BaseQuestionRepository baseQuestionRepository;
     private final QuestionRepository questionRepository;
+    private FeedbackService feedbackService;
 
-    public FeedbackAdminController(FeedbackRepository feedbackRepository, EmployeeRepository employeeRepository, BaseQuestionRepository baseQuestionRepository, QuestionRepository questionRepository) {
+    public FeedbackAdminController(FeedbackRepository feedbackRepository, EmployeeRepository employeeRepository, QuestionRepository questionRepository, FeedbackService feedbackService) {
         this.feedbackRepository = feedbackRepository;
         this.employeeRepository = employeeRepository;
-        this.baseQuestionRepository = baseQuestionRepository;
         this.questionRepository = questionRepository;
+        this.feedbackService = feedbackService;
     }
 
     @GetMapping
@@ -65,7 +64,7 @@ public class FeedbackAdminController extends BaseController {
         feedback.setRelationship(feedbackInput.getRelationship());
         //TODO Move this mess to a service class.
         try {
-            generateFeedbackQuestions(feedback);
+            feedbackService.generateFeedbackQuestions(feedback);
         } catch (Exception e) {
             e.printStackTrace();
             bindingResult.addError(new ObjectError("feedback", e.getMessage()));
@@ -80,7 +79,7 @@ public class FeedbackAdminController extends BaseController {
     public String processAll() {
         //TODO Shame on me... again, create a proper service class.
         questionRepository.deleteAll();
-        feedbackRepository.findAll().forEach(this::generateFeedbackQuestions);
+        feedbackRepository.findAll().forEach(feedbackService::generateFeedbackQuestions);
         return "redirect:/admin/feedbacks";
     }
 
@@ -96,31 +95,10 @@ public class FeedbackAdminController extends BaseController {
                     feedback.getEvaluator().getEmail(),
                     feedback.getEvaluated().getEmail()
             );
-            generateFeedbackQuestions(feedback);
+            feedbackService.generateFeedbackQuestions(feedback);
         });
 
         return "redirect:/admin/feedbacks";
-    }
-
-    private void generateFeedbackQuestions(Feedback feedback) {
-        try {
-
-            baseQuestionRepository.findAllByPosition(feedback.getEvaluated().getPosition()).forEach(baseQuestion -> {
-                Question question = new Question(
-                    baseQuestion.getPosition(),
-                    baseQuestion.getCategory(),
-                    baseQuestion.getDescription(),
-                    feedback.getEvaluated(),
-                    feedback.getEvaluator());
-                    questionRepository.save(question);
-        });
-            feedback.setState(FeedbackState.NOT_STARTED);
-            feedbackRepository.save(feedback);
-        } catch (DataIntegrityViolationException exception) {
-            exception.printStackTrace();
-            throw new RuntimeException("Erro ao gerar Avaliação. Verifique se a relação entre os dois profissionais já " +
-                    "existe. Não é possível modificar uma relação, você deve remover a Avaliação anterior e criar uma nova.");
-        }
     }
 
     @Transactional
