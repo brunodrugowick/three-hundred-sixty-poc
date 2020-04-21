@@ -9,10 +9,14 @@ import dev.drugowick.threehundredsixty.domain.repository.BaseQuestionRepository;
 import dev.drugowick.threehundredsixty.domain.repository.EmployeeRepository;
 import dev.drugowick.threehundredsixty.domain.repository.FeedbackRepository;
 import dev.drugowick.threehundredsixty.domain.repository.QuestionRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -49,7 +53,9 @@ public class FeedbackAdminController extends BaseController {
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String save(Principal principal, Model model, @Valid FeedbackInput feedbackInput) {
+    public String save(Principal principal, Model model,
+                       @ModelAttribute("feedback") @Valid FeedbackInput feedbackInput,
+                       BindingResult bindingResult) {
         Feedback feedback = new Feedback();
         employeeRepository.findByEmail(feedbackInput.getEvaluatorUsername())
                 .ifPresent(feedback::setEvaluator);
@@ -58,7 +64,14 @@ public class FeedbackAdminController extends BaseController {
         feedback.setState(FeedbackState.NOT_PROCESSED);
         feedback.setRelationship(feedbackInput.getRelationship());
         //TODO Move this mess to a service class.
-        generateFeedbackQuestions(feedback);
+        try {
+            generateFeedbackQuestions(feedback);
+        } catch (Exception e) {
+            e.printStackTrace();
+            bindingResult.addError(new ObjectError("feedback", e.getMessage()));
+            model.addAttribute("employees", employeeRepository.findAll());
+            return "admin/feedback-new";
+        }
         return "redirect:/admin/feedbacks";
     }
 
@@ -90,17 +103,24 @@ public class FeedbackAdminController extends BaseController {
     }
 
     private void generateFeedbackQuestions(Feedback feedback) {
-        baseQuestionRepository.findAllByPosition(feedback.getEvaluated().getPosition()).forEach(baseQuestion -> {
-            Question question = new Question(
+        try {
+
+            baseQuestionRepository.findAllByPosition(feedback.getEvaluated().getPosition()).forEach(baseQuestion -> {
+                Question question = new Question(
                     baseQuestion.getPosition(),
                     baseQuestion.getCategory(),
                     baseQuestion.getDescription(),
                     feedback.getEvaluated(),
                     feedback.getEvaluator());
-            questionRepository.save(question);
+                    questionRepository.save(question);
         });
-        feedback.setState(FeedbackState.NOT_STARTED);
-        feedbackRepository.save(feedback);
+            feedback.setState(FeedbackState.NOT_STARTED);
+            feedbackRepository.save(feedback);
+        } catch (DataIntegrityViolationException exception) {
+            exception.printStackTrace();
+            throw new RuntimeException("Erro ao gerar Avaliação. Verifique se a relação entre os dois profissionais já " +
+                    "existe. Não é possível modificar uma relação, você deve remover a Avaliação anterior e criar uma nova.");
+        }
     }
 
     @Transactional
