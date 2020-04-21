@@ -6,11 +6,10 @@ import dev.drugowick.threehundredsixty.domain.repository.BaseQuestionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Optional;
 
@@ -26,23 +25,26 @@ public class QuestionAdminController extends BaseController {
 
     @GetMapping
     @RequestMapping("/questions")
-    public String list(Principal principal, Model model) {
+    public String list(Model model) {
         model.addAttribute("questions", baseQuestionRepository.findAll());
         return "admin/questions-admin";
     }
 
     @RequestMapping(value = "/questions/{id}", method = RequestMethod.GET)
-    public String get(Principal principal, Model model, @PathVariable Long id) {
+    public String get(Model model, @PathVariable Long id) {
         Optional<BaseQuestion> optionalQuestion = baseQuestionRepository.findById(id);
         optionalQuestion.ifPresent(baseQuestion -> model.addAttribute("question", baseQuestion));
         return "admin/question-edit";
     }
 
     @RequestMapping(value = "/questions/{id}", method = RequestMethod.POST)
-    public String saveOne(Principal principal, Model model,
-                          BaseQuestion baseQuestion,
+    public String saveOne(@ModelAttribute("question") @Valid BaseQuestion baseQuestion,
+                          BindingResult bindingResult,
                           @PathVariable Long id
     ) {
+        if (bindingResult.hasErrors()) {
+            return "admin/question-edit";
+        }
         Optional<BaseQuestion> optionalQuestion = baseQuestionRepository.findById(id);
         baseQuestionRepository.save(baseQuestion);
         return "redirect:/admin/questions";
@@ -56,7 +58,11 @@ public class QuestionAdminController extends BaseController {
     }
 
     @RequestMapping(value = "/questions/new", method = RequestMethod.POST)
-    public String save(Principal principal, Model model, BaseQuestion baseQuestion) {
+    public String save(@ModelAttribute("question") @Valid BaseQuestion baseQuestion,
+                       BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "admin/question-edit";
+        }
         baseQuestionRepository.save(baseQuestion);
         return "redirect:/admin/questions";
     }

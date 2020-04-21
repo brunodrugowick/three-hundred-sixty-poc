@@ -41,6 +41,7 @@
         <tr class="text-left">
             <th scope="col" data-sortable="true">Funcionário</th>
             <th scope="col" data-sortable="true">Cargo</th>
+            <th scope="col" data-sortable="true" title="Define se o usuário pode acessar a aplicação.">Ativo</th>
             <th scope="col">Ações</th>
         </tr>
         </thead>
@@ -48,6 +49,10 @@
         <tr class="text-left" th:each="employee : ${employees}">
             <td th:text="${employee.getName()}"></td>
             <td th:text="${employee.getPosition()}"></td>
+            <td>
+                <span th:if="${employee.isEnabled()}">Ativo</span>
+                <span th:unless="${employee.isEnabled()}">Inativo</span>
+            </td>
             <td>
                 <a class="btn btn-primary"
                    style="white-space: nowrap"
