@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
@@ -48,7 +49,7 @@ public class FeedbackAdminController extends BaseController {
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String save(Principal principal, Model model, FeedbackInput feedbackInput) {
+    public String save(Principal principal, Model model, @Valid FeedbackInput feedbackInput) {
         Feedback feedback = new Feedback();
         employeeRepository.findByEmail(feedbackInput.getEvaluatorUsername())
                 .ifPresent(feedback::setEvaluator);
