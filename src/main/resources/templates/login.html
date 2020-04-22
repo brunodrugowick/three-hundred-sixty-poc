@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       lang="en">
@@ -7,50 +8,61 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Please sign in</title>
+
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="box col-md-6 col-md-offset-3">
+    <div class="container">
+        <form class="form-signin" method="post" action="/admin">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <p>
+                <label for="username" class="sr-only">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+            </p>
+            <p>
+                <label for="password" class="sr-only">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+            </p>
 
-<!--            <div class="okta-header">-->
-<!--                <img src="img/logo.png"/>-->
-<!--            </div>-->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <a href="#" data-toggle="modal" data-target="#exampleModal">forgot my password</a>
+        </form>
+    </div>
 
-<!--            https://stackoverflow.com/a/43075280/7362660 -->
-            <!--/* displayed if account IS NOT null, indicating that the user IS logged in */-->
-            <div th:if="${#authorization?.expression('isAuthenticated()')}">
-                <h1 th:inline="text">Hello, <span th:text="${#authentication.name}"></span>!</h1>
-            </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="post" action="/password/sendmail">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Forgot my password</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="card-title">Inform you email</h5>
+                        <p class="card-text">We will send you a link to reset your password</p>
 
-            <!--/* displayed if account IS null, indicating that the user IS NOT logged in */-->
-            <div th:unless="${#authorization?.expression('isAuthenticated()')}">
-                <h1>Who are you?</h1>
-            </div>
-
-<!--            <a href="/admin" class="btn btn-primary">/admin</a>-->
-
-            <br/>
-            <div class="container">
-                <form class="form-signin" method="post" action="/admin">
-                    <h2 class="form-signin-heading">Please sign in</h2>
-                    <p>
-                        <label for="username" class="sr-only">Username</label>
-                        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-                    </p>
-                    <p>
-                        <label for="password" class="sr-only">Password</label>
-                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-                    </p>
-            <!--        <input name="_csrf" type="hidden" value="25639fbc-62d5-41de-a52b-4a7fa9f71727" />-->
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                </form>
-            </div>
-
+                        <div class="form-group row">
+                            <label for="usermail" class="col-sm-4 col-form-label">email:</label>
+                            <input id="usermail" name="usermail" class="form-control col-sm-8" placeholder="email" type="email"/>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">Send!</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-</div>
 </body>
 </html>

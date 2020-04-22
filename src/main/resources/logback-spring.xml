@@ -3,6 +3,7 @@
 
 <!--    <property name="LOGS" value="./logs" />-->
     <property name="LOGS" value="/tmp/360Application/logs" />
+    <property name="logEncoding" value="UTF-8"/>
 
     <appender name="Console"
               class="ch.qos.logback.core.ConsoleAppender">
@@ -13,11 +14,22 @@
         </layout>
     </appender>
 
+<!--    idea, maybe log business-relevant things: -->
+    <appender name="BUSINESS" class="ch.qos.logback.core.FileAppender">
+        <file>${LOGS}/business.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%date{ISO8601, UTC} >>> %-4relative [%thread] %-5level %logger{5} - %msg %n</pattern>
+            <charset>${logEncoding}</charset>
+        </encoder>
+    </appender>
+
     <appender name="EXCEPTIONS_APPENDER" class="ch.qos.logback.core.FileAppender">
         <file>${LOGS}/exceptions.log</file>
         <append>true</append>
         <encoder>
             <pattern>%date{ISO8601, UTC} %-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+            <charset>${logEncoding}</charset>
         </encoder>
     </appender>
 
@@ -52,15 +64,27 @@
         <appender-ref ref="Console" />
     </logger>
 
+    <logger name="org.springframework.security.web.csrf.CsrfFilter" level="debug" additivity="false">
+        <appender-ref ref="Console" />
+    </logger>
+
     <!-- -->
     <logger name="dev.drugowick.threehundredsixty" level="debug" additivity="false">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </logger>
 
+<!--   what about: javax.persistence.* ? -->
 
     <logger name="EXCEPTIONS" level="info" additivity="false">
         <appender-ref ref="EXCEPTIONS_APPENDER" />
+    </logger>
+
+
+    <logger name="BUSINESS" level="info" additivity="false">
+        <appender-ref ref="EXCEPTIONS_APPENDER" />
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console" />
     </logger>
 
 
