@@ -18,7 +18,7 @@ public class ReportsServiceImpl implements ReportsService {
     @PersistenceContext
     private EntityManager manager;
 
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
     public ReportsServiceImpl(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -41,8 +41,10 @@ public class ReportsServiceImpl implements ReportsService {
                     builder.avg(root.get("evaluationValue")));
 
             query.select(selection);
-            query.where(builder.equal(root.get("evaluated"), employee));
-            query.where(builder.notEqual(root.get("evaluationValue"), 0));
+            query.where(
+                    builder.equal(root.get("evaluated"), employee),
+                    builder.notEqual(root.get("evaluationValue"), 0)
+            );
             query.groupBy(
                     root.get("title"),
                     root.get("description"));
