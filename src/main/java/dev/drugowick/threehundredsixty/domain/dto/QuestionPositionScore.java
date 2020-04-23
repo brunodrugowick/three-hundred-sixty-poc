@@ -9,5 +9,6 @@ public class QuestionPositionScore {
 
     private String title;
     private String description;
+    private String position;
     private Double positionAverageScore;
 }

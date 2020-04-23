@@ -38,16 +38,19 @@ public class ReportsServiceImpl implements ReportsService {
             CompoundSelection<QuestionPositionScore> selection = builder.construct(QuestionPositionScore.class,
                     root.get("title"),
                     root.get("description"),
+                    root.get("evaluator").get("position"),
                     builder.avg(root.get("evaluationValue")));
 
             query.select(selection);
             query.where(
                     builder.equal(root.get("evaluated"), employee),
-                    builder.notEqual(root.get("evaluationValue"), 0)
+                    builder.notEqual(root.get("evaluationValue"), 0),
+                    builder.notEqual(root.get("evaluator"), employee) // Excludes self evaluation
             );
             query.groupBy(
                     root.get("title"),
-                    root.get("description"));
+                    root.get("description"),
+                    root.get("evaluator").get("position"));
 
             return manager.createQuery(query).getResultList();
         }
