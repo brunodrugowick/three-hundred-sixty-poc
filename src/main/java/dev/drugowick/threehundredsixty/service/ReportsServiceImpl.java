@@ -57,10 +57,12 @@ public class ReportsServiceImpl implements ReportsService {
 
             List<QuestionPositionScore> questionPositionScores = manager.createQuery(query).getResultList();
 
+            //TODO Add self evaluation
+
             //TODO Review this
             int id = 0;
             for (QuestionPositionScore questionPositionScore : questionPositionScores) {
-                questionRepository.findAllByEvaluatedEmailAndDescriptionAndCategory(
+                questionRepository.findAllByEvaluatedEmailAndDescriptionAndEvaluatorPosition(
                         username,
                         questionPositionScore.getDescription(),
                         questionPositionScore.getPosition()).forEach(question -> {

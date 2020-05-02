@@ -72,7 +72,9 @@
                             </div>
                             <br>
                             <div class="modal-body">
-                                <div th:each="example : ${question.getExamples()}" class="alert alert-warning" role="alert">
+                                <div th:each="example : ${question.getExamples()}"
+                                     th:if="${example != null && !example.isBlank()}"
+                                     class="alert alert-warning" role="alert">
                                     <span th:text="${example}">Aqui vai um exemplo sobre essa pergunta, meu amigo.</span>
                                 </div>
                             </div>
@@ -103,7 +105,9 @@
                             </div>
                             <br>
                             <div class="modal-body">
-                                <div th:each="improvement : ${question.getImprovements()}" class="alert alert-warning" role="alert">
+                                <div th:each="improvement : ${question.getImprovements()}"
+                                     th:if="${improvement != null && !improvement.isBlank()}"
+                                     class="alert alert-warning" role="alert">
                                     <span th:text="${improvement}">Aqui vai uma sugestão de melhoria, meu amigo.</span>
                                 </div>
                             </div>
