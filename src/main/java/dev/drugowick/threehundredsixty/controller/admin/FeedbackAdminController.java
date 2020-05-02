@@ -4,18 +4,22 @@ import dev.drugowick.threehundredsixty.controller.BaseController;
 import dev.drugowick.threehundredsixty.controller.util.FeedbackInput;
 import dev.drugowick.threehundredsixty.domain.entity.Feedback;
 import dev.drugowick.threehundredsixty.domain.entity.FeedbackState;
-import dev.drugowick.threehundredsixty.domain.entity.Question;
 import dev.drugowick.threehundredsixty.domain.repository.BaseQuestionRepository;
 import dev.drugowick.threehundredsixty.domain.repository.EmployeeRepository;
 import dev.drugowick.threehundredsixty.domain.repository.FeedbackRepository;
 import dev.drugowick.threehundredsixty.domain.repository.QuestionRepository;
+import dev.drugowick.threehundredsixty.service.FeedbackService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
@@ -24,14 +28,14 @@ public class FeedbackAdminController extends BaseController {
 
     private final FeedbackRepository feedbackRepository;
     private final EmployeeRepository employeeRepository;
-    private final BaseQuestionRepository baseQuestionRepository;
     private final QuestionRepository questionRepository;
+    private FeedbackService feedbackService;
 
-    public FeedbackAdminController(FeedbackRepository feedbackRepository, EmployeeRepository employeeRepository, BaseQuestionRepository baseQuestionRepository, QuestionRepository questionRepository) {
+    public FeedbackAdminController(FeedbackRepository feedbackRepository, EmployeeRepository employeeRepository, QuestionRepository questionRepository, FeedbackService feedbackService) {
         this.feedbackRepository = feedbackRepository;
         this.employeeRepository = employeeRepository;
-        this.baseQuestionRepository = baseQuestionRepository;
         this.questionRepository = questionRepository;
+        this.feedbackService = feedbackService;
     }
 
     @GetMapping
@@ -48,7 +52,9 @@ public class FeedbackAdminController extends BaseController {
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String save(Principal principal, Model model, FeedbackInput feedbackInput) {
+    public String save(Principal principal, Model model,
+                       @ModelAttribute("feedback") @Valid FeedbackInput feedbackInput,
+                       BindingResult bindingResult) {
         Feedback feedback = new Feedback();
         employeeRepository.findByEmail(feedbackInput.getEvaluatorUsername())
                 .ifPresent(feedback::setEvaluator);
@@ -57,7 +63,14 @@ public class FeedbackAdminController extends BaseController {
         feedback.setState(FeedbackState.NOT_PROCESSED);
         feedback.setRelationship(feedbackInput.getRelationship());
         //TODO Move this mess to a service class.
-        generateFeedbackQuestions(feedback);
+        try {
+            feedbackService.generateFeedbackQuestions(feedback);
+        } catch (Exception e) {
+            e.printStackTrace();
+            bindingResult.addError(new ObjectError("feedback", e.getMessage()));
+            model.addAttribute("employees", employeeRepository.findAll());
+            return "admin/feedback-new";
+        }
         return "redirect:/admin/feedbacks";
     }
 
@@ -66,7 +79,7 @@ public class FeedbackAdminController extends BaseController {
     public String processAll() {
         //TODO Shame on me... again, create a proper service class.
         questionRepository.deleteAll();
-        feedbackRepository.findAll().forEach(this::generateFeedbackQuestions);
+        feedbackRepository.findAll().forEach(feedbackService::generateFeedbackQuestions);
         return "redirect:/admin/feedbacks";
     }
 
@@ -82,30 +95,20 @@ public class FeedbackAdminController extends BaseController {
                     feedback.getEvaluator().getEmail(),
                     feedback.getEvaluated().getEmail()
             );
-            generateFeedbackQuestions(feedback);
+            feedbackService.generateFeedbackQuestions(feedback);
         });
 
         return "redirect:/admin/feedbacks";
     }
 
-    private void generateFeedbackQuestions(Feedback feedback) {
-        baseQuestionRepository.findAllByPosition(feedback.getEvaluated().getPosition()).forEach(baseQuestion -> {
-            Question question = new Question(
-                    baseQuestion.getPosition(),
-                    baseQuestion.getCategory(),
-                    baseQuestion.getDescription(),
-                    feedback.getEvaluated(),
-                    feedback.getEvaluator());
-            questionRepository.save(question);
-        });
-        feedback.setState(FeedbackState.NOT_STARTED);
-        feedbackRepository.save(feedback);
-    }
-
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public String delete(FeedbackInput feedbackInput) {
+        // TODO this should be in a service layer.
         feedbackRepository.deleteFeedbackByEvaluatorEmailAndEvaluatedEmail(
+                feedbackInput.getEvaluatorUsername(),
+                feedbackInput.getEvaluatedUsername());
+        questionRepository.deleteAllByEvaluatorEmailAndEvaluatedEmail(
                 feedbackInput.getEvaluatorUsername(),
                 feedbackInput.getEvaluatedUsername());
         return "redirect:/admin/feedbacks";

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href='/webjars/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/css/bootstrap-table.css">
+
+    <meta charset="UTF-8">
+    <title>Avaliações</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header (${username}, ${admin})"></div>
+<br>
+<div class="float-left" th:replace="fragments/admin-page-title :: admin-page-title ('Relatórios de Avaliações')"></div>
+<div class="alert alert-warning" role="alert">
+    BETA: os relatórios disponibilizam apenas mínima capacidade de visualização das questões de determinado funcionário.
+</div>
+<div class="container-fluid input-group">
+</div>
+<br>
+<div class="container-fluid">
+
+    <table class="table table-striped">
+        <thead>
+        <tr class="text-left">
+            <th scope="col">Funcionário</th>
+            <th scope="col">Cargo</th>
+            <th scope="col">Total de Avaliações a Receber</th>
+            <th scope="col">Avaliações Recebidas (Finalizadas)</th>
+            <th scope="col">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-left" th:each="employeeFeedbacks : ${employeesFeedbacks}">
+            <!--/*@thymesVar id="employee" type="dev.drugowick.threehundredsixty.controller.admin.FeedbackReportBetaController.EmployeeReportListData"*/-->
+            <td th:text="${employeeFeedbacks.getEmployee().getName()}"></td>
+            <td th:text="${employeeFeedbacks.getEmployee().getPosition()}"></td>
+            <td th:text="${employeeFeedbacks.getNumberOfFeedbacks()}"></td>
+            <td th:text="${employeeFeedbacks.getNumberOfFinishedFeedbacks()}
+"></td>
+            <td>
+                <a class="btn btn-primary"
+                   style="white-space: nowrap"
+                   th:href="'/admin/reports/' + ${employeeFeedbacks.getEmployee().getId()}"
+                   >Ver Relatório</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container-fluid" id="footer">
+    <br><hr><br>
+</div>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-table-locale-all.min.js"></script>
+</body>
+</html>
