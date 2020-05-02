@@ -31,16 +31,16 @@
                     <table class="table table-striped">
                         <thead>
                         <tr class="text-left">
-                            <th scope="col">Você avalia como</th>
                             <th scope="col">Funcionário</th>
+                            <th scope="col">Você avalia como</th>
                             <th scope="col">Cargo</th>
                             <th scope="col">Situação</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr class="text-left" th:each="feedback : ${feedbacks}">
-                            <td th:text="${feedback.getRelationship().relationship}"></td>
                             <td th:text="${feedback.getEvaluated().getName()}"></td>
+                            <td th:text="${feedback.getRelationship().relationship}"></td>
                             <td th:text="${feedback.getEvaluated().getPosition()}"></td>
                             <td>
                                 <a th:if="${feedback.getState().toString().equals('NOT_STARTED')}" class="btn btn-outline-primary"
