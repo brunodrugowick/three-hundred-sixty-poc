@@ -15,7 +15,7 @@
     <description>A PoC for a 360 Degree Feedback.</description>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
     </properties>
 
     <dependencies>
