@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href='/webjars/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="/css/bootstrap-table.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
 
     <meta charset="UTF-8">
     <title>Avaliações</title>
@@ -38,6 +38,7 @@
             <th scope="col">Descrição</th>
             <th scope="col">Cargo do(s) Avaliador(es)</th>
             <th scope="col">Avaliação</th>
+            <th scope="col">Detalhes</th>
         </tr>
         </thead>
         <tbody>
@@ -49,6 +50,69 @@
                 <span th:text="${question.getPositionAverageScore()}">
                     Atende
                 </span>
+            </td>
+            <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-primary"
+                        data-toggle="modal"
+                        th:data-target="'#examplesModal' + ${question.id}">
+                    Ver exemplos
+                </button>
+                <!-- Modal -->
+                <div class="modal fade"
+                     th:id="'examplesModal' + ${question.id}"
+                     tabindex="-1" role="dialog" aria-labelledby="examplesModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="examplesModalLabel">Exemplos</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <br>
+                            <div class="modal-body">
+                                <div th:each="example : ${question.getExamples()}" class="alert alert-warning" role="alert">
+                                    <span th:text="${example}">Aqui vai um exemplo sobre essa pergunta, meu amigo.</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                &nbsp;
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-primary"
+                        data-toggle="modal"
+                        th:data-target="'#improvementsModal' + ${question.id}">
+                    Ver melhorias sugeridas
+                </button>
+                <!-- Modal -->
+                <div class="modal fade"
+                     th:id="'improvementsModal' + ${question.id}"
+                     tabindex="-1" role="dialog" aria-labelledby="improvementsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="improvementsModalLabel">Sugesstões de Melhorias</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <br>
+                            <div class="modal-body">
+                                <div th:each="improvement : ${question.getImprovements()}" class="alert alert-warning" role="alert">
+                                    <span th:text="${improvement}">Aqui vai uma sugestão de melhoria, meu amigo.</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </td>
         </tr>
         </tbody>
@@ -66,7 +130,8 @@
 </div>
 
 <script src="/webjars/jquery/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-<script src="/js/bootstrap-table-locale-all.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
 </body>
 </html>

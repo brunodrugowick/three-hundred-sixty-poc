@@ -4,6 +4,7 @@ import dev.drugowick.threehundredsixty.domain.dto.QuestionPositionScore;
 import dev.drugowick.threehundredsixty.domain.entity.Employee;
 import dev.drugowick.threehundredsixty.domain.entity.Question;
 import dev.drugowick.threehundredsixty.domain.repository.EmployeeRepository;
+import dev.drugowick.threehundredsixty.domain.repository.QuestionRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -19,9 +20,11 @@ public class ReportsServiceImpl implements ReportsService {
     private EntityManager manager;
 
     private final EmployeeRepository employeeRepository;
+    private final QuestionRepository questionRepository;
 
-    public ReportsServiceImpl(EmployeeRepository employeeRepository) {
+    public ReportsServiceImpl(EmployeeRepository employeeRepository, QuestionRepository questionRepository) {
         this.employeeRepository = employeeRepository;
+        this.questionRepository = questionRepository;
     }
 
     @Override
@@ -52,7 +55,23 @@ public class ReportsServiceImpl implements ReportsService {
                     root.get("description"),
                     root.get("evaluator").get("position"));
 
-            return manager.createQuery(query).getResultList();
+            List<QuestionPositionScore> questionPositionScores = manager.createQuery(query).getResultList();
+
+            //TODO Review this
+            int id = 0;
+            for (QuestionPositionScore questionPositionScore : questionPositionScores) {
+                questionRepository.findAllByEvaluatedEmailAndDescriptionAndCategory(
+                        username,
+                        questionPositionScore.getDescription(),
+                        questionPositionScore.getPosition()).forEach(question -> {
+                    questionPositionScore.getExamples().add(question.getExample());
+                    questionPositionScore.getImprovements().add(question.getImprovement());
+                });
+                questionPositionScore.setId(id);
+                id++;
+            }
+
+            return questionPositionScores;
         }
 
         return null;

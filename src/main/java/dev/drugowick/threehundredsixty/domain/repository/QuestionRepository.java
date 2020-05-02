@@ -11,7 +11,8 @@ import java.util.Optional;
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     List<Question> findAllByEvaluatorEmailAndEvaluatedId(String username, Long evaluatedId);
-    Optional<Question> findByEvaluatorEmailAndEvaluatedIdAndId(String username, Long evaluatedId, Long id);
     List<Question> findAllByEvaluatedId(Long evaluatedId);
+    List<Question> findAllByEvaluatedEmailAndDescriptionAndCategory(String evaluatedEmail, String description, String category);
+    Optional<Question> findByEvaluatorEmailAndEvaluatedIdAndId(String username, Long evaluatedId, Long id);
     void deleteAllByEvaluatorEmailAndEvaluatedEmail(String evaluator, String evaluated);
 }
