@@ -68,79 +68,103 @@ public class BootstrapData implements CommandLineRunner {
         baseQuestion2.setDescription("Se comunica com a frequência adequada com seus subordinados.");
         baseQuestionRepository.save(baseQuestion2);
 
-        Employee employee1 = new Employee();
-        employee1.setName("Heitor Marrakesh");
-        employee1.setPosition("Coordenador");
-        employee1.setEmail("heitor.marrakesh@email.com");
-        employee1.setPassword(passwordEncoder.encode("password"));
-        employee1.setRoles("ROLE_USER,ROLE_ADMIN");
-        employee1.setEnabled(true);
-        employeeRepository.save(employee1);
+        Employee heitor = new Employee();
+        heitor.setName("Heitor Marrakesh");
+        heitor.setPosition("Coordenador");
+        heitor.setEmail("heitor.marrakesh@email.com");
+        heitor.setPassword(passwordEncoder.encode("password"));
+        heitor.setRoles("ROLE_USER,ROLE_ADMIN");
+        heitor.setEnabled(true);
+        employeeRepository.save(heitor);
 
-        Employee employee2 = new Employee();
-        employee2.setName("Bruno Mahoney");
-        employee2.setPosition("Coordenador");
-        employee2.setEmail("bruno.mahoney@email.com");
-        employee2.setPassword(passwordEncoder.encode("password"));
-        employee2.setRoles("ROLE_USER,ROLE_ADMIN");
-        employee2.setEnabled(true);
-        employeeRepository.save(employee2);
+        Employee drugo = new Employee();
+        drugo.setName("Bruno Mahoney");
+        drugo.setPosition("Coordenador");
+        drugo.setEmail("bruno.mahoney@email.com");
+        drugo.setPassword(passwordEncoder.encode("password"));
+        drugo.setRoles("ROLE_USER,ROLE_ADMIN");
+        drugo.setEnabled(true);
+        employeeRepository.save(drugo);
 
-        Employee employee3 = new Employee();
-        employee3.setName("Enrique Iglesias");
-        employee3.setPosition("Analista de Sistemas");
-        employee3.setEmail("enrique.iglesias@email.com");
-        employee3.setPassword(passwordEncoder.encode("password"));
-        employee3.setRoles("ROLE_USER,ROLE_ADMIN");
-        employee3.setEnabled(true);
-        employeeRepository.save(employee3);
+        Employee enrique = new Employee();
+        enrique.setName("Enrique Iglesias");
+        enrique.setPosition("Analista de Sistemas");
+        enrique.setEmail("enrique.iglesias@email.com");
+        enrique.setPassword(passwordEncoder.encode("password"));
+        enrique.setRoles("ROLE_USER,ROLE_ADMIN");
+        enrique.setEnabled(true);
+        employeeRepository.save(enrique);
 
         Feedback feedback1 = new Feedback();
         feedback1.setState(FeedbackState.NOT_STARTED);
         feedback1.setRelationship(FeedbackRelationship.PEER);
-        feedback1.setEvaluator(employee1);
-        feedback1.setEvaluated(employee2);
+        feedback1.setEvaluator(heitor);
+        feedback1.setEvaluated(drugo);
         feedbackRepository.save(feedback1);
         feedbackService.generateFeedbackQuestions(feedback1);
 
         Feedback feedback2 = new Feedback();
         feedback2.setState(FeedbackState.NOT_STARTED);
         feedback2.setRelationship(FeedbackRelationship.SUPERIOR);
-        feedback2.setEvaluator(employee1);
-        feedback2.setEvaluated(employee3);
+        feedback2.setEvaluator(heitor);
+        feedback2.setEvaluated(enrique);
         feedbackRepository.save(feedback2);
         feedbackService.generateFeedbackQuestions(feedback2);
 
         Feedback feedback3 = new Feedback();
         feedback3.setState(FeedbackState.NOT_STARTED);
         feedback3.setRelationship(FeedbackRelationship.PEER);
-        feedback3.setEvaluator(employee2);
-        feedback3.setEvaluated(employee1);
+        feedback3.setEvaluator(drugo);
+        feedback3.setEvaluated(heitor);
         feedbackRepository.save(feedback3);
         feedbackService.generateFeedbackQuestions(feedback3);
 
         Feedback feedback4 = new Feedback();
         feedback4.setState(FeedbackState.NOT_STARTED);
         feedback4.setRelationship(FeedbackRelationship.SUPERIOR);
-        feedback4.setEvaluator(employee2);
-        feedback4.setEvaluated(employee3);
+        feedback4.setEvaluator(drugo);
+        feedback4.setEvaluated(enrique);
         feedbackRepository.save(feedback4);
         feedbackService.generateFeedbackQuestions(feedback4);
 
         Feedback feedback5 = new Feedback();
         feedback5.setState(FeedbackState.NOT_STARTED);
         feedback5.setRelationship(FeedbackRelationship.SUBORDINATE);
-        feedback5.setEvaluator(employee3);
-        feedback5.setEvaluated(employee1);
+        feedback5.setEvaluator(enrique);
+        feedback5.setEvaluated(heitor);
         feedbackRepository.save(feedback5);
         feedbackService.generateFeedbackQuestions(feedback5);
 
         Feedback feedback6 = new Feedback();
         feedback6.setState(FeedbackState.NOT_STARTED);
         feedback6.setRelationship(FeedbackRelationship.SUPERIOR);
-        feedback6.setEvaluator(employee3);
-        feedback6.setEvaluated(employee2);
+        feedback6.setEvaluator(enrique);
+        feedback6.setEvaluated(drugo);
         feedbackRepository.save(feedback6);
         feedbackService.generateFeedbackQuestions(feedback6);
+
+        Feedback selfFeedback1 = new Feedback();
+        selfFeedback1.setState(FeedbackState.NOT_STARTED);
+        selfFeedback1.setRelationship(FeedbackRelationship.SELF);
+        selfFeedback1.setEvaluator(drugo);
+        selfFeedback1.setEvaluated(drugo);
+        feedbackRepository.save(selfFeedback1);
+        feedbackService.generateFeedbackQuestions(selfFeedback1);
+
+        Feedback selfFeedback2 = new Feedback();
+        selfFeedback2.setState(FeedbackState.NOT_STARTED);
+        selfFeedback2.setRelationship(FeedbackRelationship.SELF);
+        selfFeedback2.setEvaluator(heitor);
+        selfFeedback2.setEvaluated(heitor);
+        feedbackRepository.save(selfFeedback2);
+        feedbackService.generateFeedbackQuestions(selfFeedback2);
+
+        Feedback selfFeedback3 = new Feedback();
+        selfFeedback3.setState(FeedbackState.NOT_STARTED);
+        selfFeedback3.setRelationship(FeedbackRelationship.SELF);
+        selfFeedback3.setEvaluator(enrique);
+        selfFeedback3.setEvaluated(enrique);
+        feedbackRepository.save(selfFeedback3);
+        feedbackService.generateFeedbackQuestions(selfFeedback3);
     }
 }
