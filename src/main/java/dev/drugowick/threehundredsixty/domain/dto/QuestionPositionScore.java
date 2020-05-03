@@ -15,6 +15,7 @@ public class QuestionPositionScore {
     private String description;
     private String position;
     private Double positionAverageScore;
+    private Double selfEvaluation;
 
     private List<String> examples = new ArrayList<>();
     private List<String> improvements = new ArrayList<>();
