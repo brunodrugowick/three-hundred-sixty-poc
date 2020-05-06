@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
+    Question findFirstByEvaluatorEmailAndEvaluatedEmail(String evaluator, String evaluated);
     List<Question> findAllByEvaluatorEmailAndEvaluatedId(String username, Long evaluatedId);
     List<Question> findAllByEvaluatedEmailAndDescriptionAndEvaluatorPosition(String evaluatedEmail, String description, String category);
     Optional<Question> findByEvaluatorEmailAndEvaluatedIdAndId(String username, Long evaluatedId, Long id);

@@ -69,6 +69,15 @@ public class ReportsServiceImpl implements ReportsService {
                     questionPositionScore.getExamples().add(question.getExample());
                     questionPositionScore.getImprovements().add(question.getImprovement());
                 });
+
+                Question question = questionRepository.findFirstByEvaluatorEmailAndEvaluatedEmail(
+                        username,
+                        username
+                );
+                if (question != null && question.getEvaluation() != null && !question.getEvaluation().equals("")) {
+                    questionPositionScore.setSelfEvaluation(Double.valueOf((question.getEvaluationValue())));
+                }
+
                 questionPositionScore.setId(id);
                 id++;
             }

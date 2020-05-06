@@ -38,6 +38,7 @@
             <th scope="col">Descrição</th>
             <th scope="col">Cargo do(s) Avaliador(es)</th>
             <th scope="col">Avaliação</th>
+            <th scope="col">Auto-Avaliação</th>
             <th scope="col">Detalhes</th>
         </tr>
         </thead>
@@ -48,7 +49,12 @@
             <td th:text="${question.getPosition()}"></td>
             <td>
                 <span th:text="${question.getPositionAverageScore()}">
-                    Atende
+                    3.0
+                </span>
+            </td>
+            <td>
+                <span th:text="${question.getSelfEvaluation()}">
+                    3.0
                 </span>
             </td>
             <td>
