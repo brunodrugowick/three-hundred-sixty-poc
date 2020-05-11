@@ -2,6 +2,9 @@
 
 Esse projeto tem o objetivo de validar algumas ideias com relação a como aplicar uma avaliação formal (Avaliação 360 Graus) de forma rápida, simples e flexível.
 
+Veja as principais funcionalidades:
+[![Quick Demo Video](README/yt_preview.png)](https://youtu.be/erlDfTm4c7A)
+
 Você:
 
 - define o conjunto de perguntas (quantas forem necessárias!) e a que cargos se aplicam;
