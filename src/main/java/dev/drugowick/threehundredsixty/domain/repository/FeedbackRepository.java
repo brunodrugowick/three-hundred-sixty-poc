@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface FeedbackRepository extends JpaRepository<Feedback, Feedback.Key> {
 
     List<Feedback> findAllByEvaluatorEmail(String evaluator);
+    boolean existsByEvaluatedEmailAndEvaluatorEmail(String evaluatedEmail, String evaluatorEmail);
     List<Feedback> findAllByEvaluatorEmailAndStateNot(String evaluator, FeedbackState feedbackState);
     List<Feedback> findAllByEvaluatorEmailAndState(String evaluator, FeedbackState feedbackState);
     List<Feedback> findAllByEvaluatedEmail(String email);
