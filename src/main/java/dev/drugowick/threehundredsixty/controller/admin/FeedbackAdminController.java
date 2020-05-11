@@ -60,6 +60,15 @@ public class FeedbackAdminController extends BaseController {
                 .ifPresent(feedback::setEvaluator);
         employeeRepository.findByEmail(feedbackInput.getEvaluatedUsername())
                 .ifPresent(feedback::setEvaluated);
+        if (feedbackRepository.existsByEvaluatedEmailAndEvaluatorEmail(
+                feedback.getEvaluated().getEmail(),
+                feedback.getEvaluator().getEmail()
+        )) {
+            bindingResult.addError(new ObjectError("feedback",
+                    "Esta avaliação já existe e está ativa."));
+            model.addAttribute("employees", employeeRepository.findAll());
+            return "admin/feedback-new";
+        }
         feedback.setState(FeedbackState.NOT_PROCESSED);
         feedback.setRelationship(feedbackInput.getRelationship());
         //TODO Move this mess to a service class.
