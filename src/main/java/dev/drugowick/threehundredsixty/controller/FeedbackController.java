@@ -22,6 +22,8 @@ public class FeedbackController extends BaseController {
     private QuestionRepository questionRepository;
     private FeedbackRepository feedbackRepository;
 
+    protected String feedbackListQuestionTemplate = "feedback-list-questions";
+
     public FeedbackController(QuestionRepository questionRepository, FeedbackRepository feedbackRepository) {
         this.questionRepository = questionRepository;
         this.feedbackRepository = feedbackRepository;
@@ -41,6 +43,6 @@ public class FeedbackController extends BaseController {
             throw new RuntimeException("Feedback inexistente ou inválido para o usuário " + principal.getName());
         }
         model.addAttribute("questions", questions);
-        return "feedback-list-questions";
+        return feedbackListQuestionTemplate;
     }
 }
