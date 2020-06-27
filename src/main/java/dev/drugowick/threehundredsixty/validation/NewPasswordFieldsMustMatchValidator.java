@@ -34,6 +34,8 @@ public class NewPasswordFieldsMustMatchValidator implements ConstraintValidator<
             throw new ValidationException(e);
         }
 
+        if (currentPassword == null)
+            return false;
         return currentPassword.equals(currentPasswordConfirmation);
     }
 }
