@@ -31,8 +31,7 @@ jobs:
           echo Build and Test project
           ./mvnw clean verify
 
-      - name: Archive Jacoco site
-        uses: actions/upload-artifact@v2.2.4
-        with:
-          name: jacoco-reports
-          path: target/site/jacoco
+      - name: Coverage Information
+        run: |
+          awk -F "," '/three-hundred-sixty/ { missed[$2] += $4 } { covered[$2] += $5  } END { for(x in missed)printf ("%s %s%%\n", x, (covered[x]/(covered[x]+missed[x]))*100) }' target/site/jacoco/jacoco.csv
+          awk -F "," '/three-hundred-sixty/ { missed[$1] += $4 } { covered[$1] += $5  } END { for(x in missed)printf ("Overall coverage: %s%%\n", (covered[x]/(covered[x]+missed[x]))*100) }' target/site/jacoco/jacoco.csv
