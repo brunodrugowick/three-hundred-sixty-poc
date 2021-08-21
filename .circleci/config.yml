@@ -18,27 +18,9 @@ jobs:
       - run:
           name: Install Dependencies
           command: mvn dependency:go-offline --settings 'pom.xml'
-      # - run:
-      #     name: Code Climate Setup test-reporter
-      #     command: |
-      #       # download test reporter as a static binary
-      #                curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-      #                chmod +x ./cc-test-reporter
-     - run:
-        name: Run Maven Tests
-        command: mvn verify --settings 'pom.xml'
-#       - run:
-#           name: Code Climate Run tests (coverage with Jacoco)
-#           command: |
-#             echo "whatever to allow first line to be commented"
-# #            ./cc-test-reporter before-build
-#             mvn verify --settings 'pom.xml'
-# #            ./cc-test-reporter \
-# #              format-coverage target/site/jacoco/jacoco.xml     \
-# #              --input-type jacoco
-# #            ./cc-test-reporter upload-coverage
-# ##           See: https://github.com/codeclimate/test-reporter/issues/259
-# #            ./cc-test-reporter after-build --coverage-input-type jacoco --exit-code $?
+      - run:
+          name: Run Maven Tests
+          command: mvn verify --settings 'pom.xml'
 
       - save_cache:
           paths:
