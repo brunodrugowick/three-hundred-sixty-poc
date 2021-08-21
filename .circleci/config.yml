@@ -24,9 +24,9 @@ jobs:
       #       # download test reporter as a static binary
       #                curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
       #                chmod +x ./cc-test-reporter
-#      - run:
-#          name: Run Maven Tests
-#          command: mvn verify --settings 'pom.xml'
+     - run:
+        name: Run Maven Tests
+        command: mvn verify --settings 'pom.xml'
 #       - run:
 #           name: Code Climate Run tests (coverage with Jacoco)
 #           command: |
