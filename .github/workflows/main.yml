@@ -30,3 +30,9 @@ jobs:
         run: |
           echo Build and Test project
           ./mvnw clean verify
+
+      - name: Archive Jacoco site
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: jacoco-reports
+          path: target/site/jacoco
